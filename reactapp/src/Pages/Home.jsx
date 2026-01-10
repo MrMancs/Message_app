@@ -8,7 +8,7 @@ export default function Home(){
     const navigate = useNavigate();
 
     return(
-        <div className="flex flex-col justify-center text-center text-[#3285d7]">
+        <div className="flex flex-col justify-center text-center text-[#3285d7] bg-linear-to-r from-red-200 to-orange-200">
             <h1 className="text-6xl mt-10">Whisp</h1>
             <Stack spacing={2} className="flex flex-col items-center justify-center h-screen">
                 <Button onClick={() => navigate("/login")} variant="outlined" size="large">Login</Button>
