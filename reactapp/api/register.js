@@ -22,3 +22,5 @@ export default async function Register(req, res) {
     });
   }
 }
+
+//TODO hash
