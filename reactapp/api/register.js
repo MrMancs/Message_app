@@ -5,7 +5,7 @@ export default async function Register(req, res) {
         connectionString: process.env.DATABASE_URL
     })
     
-    const data = await req.body.json();
+    const data = await req.json();
 
     pool.query("INSERT INTO users (username, email, password) VALUES ($1, $2, $3)", [data.username, data.email, data.password])
 
