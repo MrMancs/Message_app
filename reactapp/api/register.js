@@ -10,9 +10,9 @@ export default async function Register(req, res) {
 
         pool.query("INSERT INTO users (username, email, password) VALUES ($1, $2, $3)", [username, email, password]);
 
-        res.sendStatus(201);
+        return new Response(JSON.stringify({ message: 'User registered successfully!' }), { status: 201, headers: "Content-Type: application/json" });
 
     } catch (error) {
-        res.sendStatus(500);
+        return new Response(JSON.stringify({ message: 'Error while registering!' }), { status: 500, headers: "Content-Type: application/json" });
     }
 }
