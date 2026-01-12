@@ -18,6 +18,18 @@ export default function Login() {
     }
   };
 
+  const [password, setPassword] = useState("");
+  const [passwordAgain, setPasswordAgain] = useState("");
+  const [matchingPasswords, setMatchingPasswords] = useState(false);
+
+  const checkMatchingPasswords = (password, passwordAgain) => {
+    if (password === passwordAgain) {
+      setMatchingPasswords(true);
+    } else {
+      setMatchingPasswords(false)
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center bg-linear-to-r from-red-200 to-orange-200">
       <Stack
@@ -50,7 +62,9 @@ export default function Login() {
             className="w-62.5"
             onChange={(e) => {
               const pw = e.target.value;
-              checkValidPassword(pw)
+              checkValidPassword(pw);
+
+              setPassword(pw);
             }}
           />
           <TextField
@@ -60,6 +74,9 @@ export default function Login() {
             required
             type="password"
             className="w-62.5"
+            onChange={(e) => {
+              setPasswordAgain(e.target.value);
+            }}
           />
           <div className="flex flex-row justify-center gap-5">
             <Button onClick={() => navigate("/login")} variant="outlined">
@@ -69,8 +86,17 @@ export default function Login() {
               Back
             </Button>
 
-            <Button onClick={() => {
-              console.log("Érvényes: ", validPassword)}} variant="outlined">
+            <Button
+              onClick={() => {
+                /*console.log("Érvényes: ", validPassword);
+                console.log(password);
+                console.log(passwordAgain);
+
+                checkMatchingPasswords(password, passwordAgain);
+                console.log(matchingPasswords)*/
+              }}
+              variant="outlined"
+            >
               Kiírás
             </Button>
           </div>
