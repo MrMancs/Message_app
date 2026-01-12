@@ -20,13 +20,13 @@ export default function Login() {
 
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
-  const [matchingPasswords, setMatchingPasswords] = useState(false);
+  const [matchingPasswords, setMatchingPasswords] = useState(true);
 
   const checkMatchingPasswords = (password, passwordAgain) => {
     if (password === passwordAgain) {
       setMatchingPasswords(true);
     } else {
-      setMatchingPasswords(false)
+      setMatchingPasswords(false);
     }
   };
 
@@ -61,10 +61,10 @@ export default function Login() {
             type="password"
             className="w-62.5"
             onChange={(e) => {
-              const pw = e.target.value;
-              checkValidPassword(pw);
+              setPassword(e.target.value);
+              checkValidPassword(e.target.value);
 
-              setPassword(pw);
+              checkMatchingPasswords(e.target.value, passwordAgain);
             }}
           />
           <TextField
@@ -76,8 +76,11 @@ export default function Login() {
             className="w-62.5"
             onChange={(e) => {
               setPasswordAgain(e.target.value);
+
+              checkMatchingPasswords(password, e.target.value)
             }}
           />
+          <p className="text-red-500">{!matchingPasswords && "A jelszavak nem egyeznek!"}</p>
           <div className="flex flex-row justify-center gap-5">
             <Button onClick={() => navigate("/login")} variant="outlined">
               Register
