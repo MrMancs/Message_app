@@ -30,6 +30,32 @@ export default function Login() {
     }
   };
 
+  const [validEmail, setValidEmail] = useState(false);
+
+  const checkValidEmail = (email) => {
+    const splitEmail = email.split("@")
+    console.log(splitEmail)
+
+    const splitAfterAt = splitEmail[1]?.split(".")
+    console.log(splitAfterAt)
+
+    if(email.length == 0 || !email.includes("@")) {
+      setValidEmail(false);
+      //console.log("első")
+    } if(splitEmail[0].length == 0 || splitEmail[1].length == 0){
+      setValidEmail(false)
+      //console.log("második")
+    } if(!splitEmail[1].includes(".")){
+      setValidEmail(false)
+      //console.log("harmadik")
+    } if(splitAfterAt[0].length == 0 || splitAfterAt[1].length < 2) {
+      setValidEmail(false)
+      //console.log("negyedik")
+    } else {
+      setValidEmail(true);
+    }
+  }
+
   return (
     <div className="flex flex-col items-center justify-center bg-linear-to-r from-red-200 to-orange-200">
       <Stack
@@ -52,6 +78,9 @@ export default function Login() {
             variant="outlined"
             required
             className="w-62.5"
+            onChange={(e) => {
+              checkValidEmail(e.target.value)
+            }}
           />
           <TextField
             id="outlined-basic"
@@ -77,10 +106,15 @@ export default function Login() {
             onChange={(e) => {
               setPasswordAgain(e.target.value);
 
-              checkMatchingPasswords(password, e.target.value)
+              checkMatchingPasswords(password, e.target.value);
             }}
           />
-          <p className="text-red-500">{!matchingPasswords && "A jelszavak nem egyeznek!"}</p>
+          <p className="text-red-500">
+            {!validEmail && "Helytelen email!"}
+          </p>
+          <p className="text-red-500">
+            {!matchingPasswords && "A jelszavak nem egyeznek!"}
+          </p>
           <div className="flex flex-row justify-center gap-5">
             <Button onClick={() => navigate("/login")} variant="outlined">
               Register
