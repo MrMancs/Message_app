@@ -14,7 +14,7 @@ export default function Login() {
         spacing={2}
         className="flex flex-col items-center justify-center h-screen"
       >
-        <div className="flex flex-col items-center justify-center gap-4 h-[450px] w-[350px]">
+        <div className="flex flex-col items-center justify-center gap-4 h-112.5 w-87.5">
           <h1 className="text-2xl pb-2 text-[#3285d7] font-bold">Login</h1>
 
           <TextField
@@ -22,7 +22,7 @@ export default function Login() {
             label="Email"
             variant="outlined"
             required
-            className="w-[250px]"
+            className="w-62.5"
           />
           <TextField
             id="outlined-basic"
@@ -30,7 +30,7 @@ export default function Login() {
             variant="outlined"
             required
             type="password"
-            className="w-[250px]"
+            className="w-62.5"
           />
           <div className="flex flex-row justify-center gap-5">
             <Button onClick={() => navigate("/chat")} variant="outlined">
