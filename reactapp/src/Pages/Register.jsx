@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-export default function Login() {
+export default function Register({ setToastData }) {
   const navigate = useNavigate();
 
   const [validPassword, setValidPassword] = useState(true);
@@ -30,14 +30,15 @@ export default function Login() {
     }
   };
 
+  const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(true);
 
   const checkValidEmail = (email) => {
     const splitEmail = email.split("@");
-    console.log(splitEmail);
+    //console.log(splitEmail);
 
     const splitAfterAt = splitEmail[1]?.split(".");
-    console.log(splitAfterAt);
+    //console.log(splitAfterAt);
 
     if (email.length == 0 || !email.includes("@")) {
       setValidEmail(false);
@@ -59,6 +60,7 @@ export default function Login() {
     }
   };
 
+  const [username, setUsername] = useState("");
   const [validUsername, setValidUsername] = useState(true);
 
   const checkValidUsername = (username) => {
@@ -66,6 +68,36 @@ export default function Login() {
       setValidUsername(false);
     } else {
       setValidUsername(true);
+    }
+  };
+
+  const handleRegister = async () => {
+    if (
+      validUsername &&
+      validEmail &&
+      validPassword &&
+      matchingPasswords &&
+      username.length != 0 &&
+      email.length != 0 &&
+      password.length != 0 &&
+      passwordAgain.length != 0
+    ) {
+      await fetch("/api/register", {
+        method: "POST",
+        body: JSON.stringify({ username, email, password }),
+      });
+      setToastData({
+        open: true,
+        message: "Registration successful!",
+        severity: "success",
+      });
+      navigate("/login");
+    } else {
+      setToastData({
+        open: true,
+        message: "Error in registration data!",
+        severity: "error",
+      });
     }
   };
 
@@ -85,6 +117,8 @@ export default function Login() {
             required
             className="w-75"
             onChange={(e) => {
+              setUsername(e.target.value);
+
               checkValidUsername(e.target.value);
             }}
           />
@@ -95,6 +129,8 @@ export default function Login() {
             required
             className="w-75"
             onChange={(e) => {
+              setEmail(e.target.value);
+
               checkValidEmail(e.target.value);
             }}
           />
@@ -107,8 +143,8 @@ export default function Login() {
             className="w-75"
             onChange={(e) => {
               setPassword(e.target.value);
-              checkValidPassword(e.target.value);
 
+              checkValidPassword(e.target.value);
               checkMatchingPasswords(e.target.value, passwordAgain);
             }}
           />
@@ -140,7 +176,13 @@ export default function Login() {
             {!matchingPasswords && "A jelszavak nem egyeznek!"}
           </p>
           <div className="flex flex-row justify-center gap-5">
-            <Button onClick={() => navigate("/login")} variant="outlined">
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                handleRegister();
+              }}
+              variant="outlined"
+            >
               Register
             </Button>
             <Button onClick={() => navigate("/")} variant="outlined">
