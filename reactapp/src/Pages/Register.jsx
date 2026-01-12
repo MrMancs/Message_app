@@ -82,13 +82,17 @@ export default function Register({ setToastData }) {
       password.length != 0 &&
       passwordAgain.length != 0
     ) {
-      await fetch("/api/register", {
+      fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, email, password }),
-      });
+      })
+      .then(async (responseJSON) => {
+        const response = await responseJSON.json();
+        console.log(response);
+      } )
       setToastData({
         open: true,
         message: "Registration successful!",
