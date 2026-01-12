@@ -113,6 +113,9 @@ export default function Login() {
             {!validEmail && "Helytelen email!"}
           </p>
           <p className="text-red-500">
+            {!validPassword && "Helytelen jelszó!"}
+          </p>
+          <p className="text-red-500">
             {!matchingPasswords && "A jelszavak nem egyeznek!"}
           </p>
           <div className="flex flex-row justify-center gap-5">
