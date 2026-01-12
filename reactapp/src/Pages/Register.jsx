@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
@@ -7,6 +7,16 @@ import Button from "@mui/material/Button";
 
 export default function Login() {
   const navigate = useNavigate();
+
+  const [validPassword, setValidPassword] = useState(false);
+
+  const checkValidPassword = (pw) => {
+    if (pw.length <= 7) {
+      setValidPassword(false);
+    } else {
+      setValidPassword(true);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center bg-linear-to-r from-red-200 to-orange-200">
@@ -38,6 +48,10 @@ export default function Login() {
             required
             type="password"
             className="w-62.5"
+            onChange={(e) => {
+              const pw = e.target.value;
+              checkValidPassword(pw)
+            }}
           />
           <TextField
             id="outlined-basic"
@@ -53,6 +67,11 @@ export default function Login() {
             </Button>
             <Button onClick={() => navigate("/")} variant="outlined">
               Back
+            </Button>
+
+            <Button onClick={() => {
+              console.log("Érvényes: ", validPassword)}} variant="outlined">
+              Kiírás
             </Button>
           </div>
         </div>
