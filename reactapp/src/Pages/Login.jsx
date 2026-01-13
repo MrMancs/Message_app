@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
@@ -7,6 +7,26 @@ import Button from "@mui/material/Button";
 
 export default function Login() {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+    .then(async (responseJSON) => {
+      const response = await responseJSON.json()
+      console.log(response)
+    }).catch((error) => {
+      console.error(error)
+    })
+    console.log(email, password)
+  };
 
   return (
     <div className="flex flex-col items-center justify-center bg-linear-to-r from-red-200 to-orange-200">
@@ -23,6 +43,9 @@ export default function Login() {
             variant="outlined"
             required
             className="w-62.5"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
           <TextField
             id="outlined-basic"
@@ -31,9 +54,18 @@ export default function Login() {
             required
             type="password"
             className="w-62.5"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
           <div className="flex flex-row justify-center gap-5">
-            <Button onClick={() => navigate("/chat")} variant="outlined">
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                handleLogin();
+              }}
+              variant="outlined"
+            >
               Login
             </Button>
             <Button onClick={() => navigate("/")} variant="outlined">

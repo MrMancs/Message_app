@@ -170,17 +170,17 @@ export default function Register({ setToastData }) {
           />
           <p className="text-red-500 text-[12px]">
             {!validUsername &&
-              "A felhasználónévnek legalább 3 karakter hosszúnak kell lennie!"}
+              "Username must 3 characters long!"}
           </p>
           <p className="text-red-500 text-[12px]">
-            {!validEmail && "Helytelen email formátum!"}
+            {!validEmail && "Invalid email format!"}
           </p>
           <p className="text-red-500 text-[12px]">
             {!validPassword &&
-              "A jelszónak legalább 8 karakter hosszúnak kell lennie!"}
+              "Password must be at least 8 characters long!"}
           </p>
           <p className="text-red-500 text-[12px]">
-            {!matchingPasswords && "A jelszavak nem egyeznek!"}
+            {!matchingPasswords && "Passwords do not match!"}
           </p>
           <div className="flex flex-row justify-center gap-5">
             <Button
