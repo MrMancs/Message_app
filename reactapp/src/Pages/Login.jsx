@@ -22,20 +22,21 @@ export default function Login({ setToastData }) {
       }).then(async (responseJSON) => {
         const response = await responseJSON.json();
         console.log(response);
-      });
 
-      setToastData({
-        open: true,
-        message: "Login successful!",
-        severity: "success",
-      });
-
-      navigate("/chat");
-    } else {
-      setToastData({
-        open: false,
-        message: "Login failed!",
-        severity: "error",
+        if (responseJSON.status === 200) {
+          setToastData({
+            open: true,
+            message: "Login successful!",
+            severity: "success",
+          });
+          navigate("/chat");
+        } else {
+          setToastData({
+            open: false,
+            message: "Login failed!",
+            severity: "error",
+          });
+        }
       });
     }
   };
