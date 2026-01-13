@@ -25,7 +25,8 @@ export default function Login() {
     }).catch((error) => {
       console.error(error)
     })
-    console.log(email, password)
+
+    navigate("/chat")
   };
 
   return (
