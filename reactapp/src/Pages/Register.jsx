@@ -88,11 +88,10 @@ export default function Register({ setToastData }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, email, password }),
-      })
-      .then(async (responseJSON) => {
+      }).then(async (responseJSON) => {
         const response = await responseJSON.json();
         console.log(response);
-      } )
+      });
       setToastData({
         open: true,
         message: "Registration successful!",
@@ -115,7 +114,7 @@ export default function Register({ setToastData }) {
         className="flex flex-col items-center justify-center h-screen"
       >
         <div className="flex flex-col items-center justify-center gap-4 h-112.5 w-100">
-          <h1 className="text-2xl pb-2 text-[#3285d7] font-bold">Register</h1>
+          <h1 className="text-2xl pb-2 text-gray-600 font-bold">Register</h1>
 
           <TextField
             id="outlined-basic"
@@ -169,15 +168,13 @@ export default function Register({ setToastData }) {
             }}
           />
           <p className="text-red-500 text-[12px]">
-            {!validUsername &&
-              "Username must 3 characters long!"}
+            {!validUsername && "Username must 3 characters long!"}
           </p>
           <p className="text-red-500 text-[12px]">
             {!validEmail && "Invalid email format!"}
           </p>
           <p className="text-red-500 text-[12px]">
-            {!validPassword &&
-              "Password must be at least 8 characters long!"}
+            {!validPassword && "Password must be at least 8 characters long!"}
           </p>
           <p className="text-red-500 text-[12px]">
             {!matchingPasswords && "Passwords do not match!"}
@@ -189,10 +186,15 @@ export default function Register({ setToastData }) {
                 handleRegister();
               }}
               variant="outlined"
+              style={{ color: "gray", borderColor: "gray" }}
             >
               Register
             </Button>
-            <Button onClick={() => navigate("/")} variant="outlined">
+            <Button
+              onClick={() => navigate("/")}
+              variant="outlined"
+              style={{ color: "gray", borderColor: "gray" }}
+            >
               Back
             </Button>
           </div>

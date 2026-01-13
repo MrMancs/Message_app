@@ -58,7 +58,7 @@ export default function Login({ setToastData }) {
         className="flex flex-col items-center justify-center h-screen"
       >
         <div className="flex flex-col items-center justify-center gap-4 h-112.5 w-87.5">
-          <h1 className="text-2xl pb-2 text-[#3285d7] font-bold">Login</h1>
+          <h1 className="text-2xl pb-2 text-gray-600 font-bold">Login</h1>
 
           <TextField
             id="outlined-basic"
@@ -88,10 +88,15 @@ export default function Login({ setToastData }) {
                 handleLogin();
               }}
               variant="outlined"
+              style={{ color: "gray", borderColor: "gray" }}
             >
               Login
             </Button>
-            <Button onClick={() => navigate("/")} variant="outlined">
+            <Button
+              onClick={() => navigate("/")}
+              variant="outlined"
+              style={{ color: "gray", borderColor: "gray" }}
+            >
               Back
             </Button>
           </div>
