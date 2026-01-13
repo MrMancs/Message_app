@@ -36,14 +36,11 @@ export default function Chat() {
       <div className="bg-white/50 h-screen max-w-sm border-r flex flex-col items-center">
         <div className="flex flex-row mt-3 mb-3">
           <h1 className="text-2xl mt-5 mb-5 text-black mr-5">
-            Your chats, 
-            <span className="text-gray-600">
-              {currentUser?.username}
-            </span>
+            Your chats,<span className="text-gray-600"> {currentUser?.username}</span>
           </h1>
           <Button
             onClick={() => {
-              localStorage.removeItem("user");
+              localStorage.removeItem("user");  
               navigate("/");
             }}
             variant="outlined"
