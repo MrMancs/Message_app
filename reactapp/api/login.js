@@ -8,10 +8,12 @@ export default async function Login(req, res) {
   try {
     const { email, password } = req.body;
 
-    await pool.query("SELECT * FROM users WHERE email = $1 AND password = $2", [
+    const result = await pool.query("SELECT * FROM users WHERE email = $1 AND password = $2", [
       email,
       password,
     ]);
+
+    console.log(result)
 
     return res.status(200).json({ message: "Login Successful!" });
   } catch (error) {
