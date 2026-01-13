@@ -53,10 +53,10 @@ export default function Chat() {
           }}
         />
 
-        <div>
+        <div className="w-full overflow-auto">
           {users.map((user) => {
             return (
-              <div className="w-full h-20 bg-white/80 border-b border-t hover:bg-gray-200 cursor-pointer flex items-center overflow-auto">
+              <div className="w-full h-20 bg-white/80 border-t hover:bg-gray-200 cursor-pointer flex items-center">
                 <h1 className="ml-5 text-2xl">{user.username}</h1>
               </div>
             );
