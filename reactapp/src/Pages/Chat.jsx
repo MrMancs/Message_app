@@ -35,7 +35,12 @@ export default function Chat() {
     <div className="bg-linear-to-r from-red-200 to-orange-200 h-screen">
       <div className="bg-white/50 h-screen max-w-sm border-r flex flex-col items-center">
         <div className="flex flex-row mt-3 mb-3">
-          <h1 className="text-2xl mt-5 mb-5 text-black mr-5">Your chats</h1>
+          <h1 className="text-2xl mt-5 mb-5 text-black mr-5">
+            Your chats,
+            <span className="block text-sm text-gray-600">
+              {currentUser?.username}
+            </span>
+          </h1>
           <Button
             onClick={() => {
               localStorage.removeItem("user");
@@ -61,21 +66,15 @@ export default function Chat() {
           }}
         />
 
-        <div>
-          <Button variant="outlined" style={{ marginRight: "20px" }}>
-            Others
-          </Button>
-          <Button variant="outlined">Friends</Button>
-        </div>
-
         <div
           className="w-full overflow-auto"
           style={{ overscrollBehavior: "none" }}
         >
           {users.map((user) => {
             return (
-              <div className="w-full h-20 bg-white/80 border-t hover:bg-gray-200 cursor-pointer flex items-center">
+              <div className="w-full h-20 bg-white/80 border-t hover:bg-gray-200 cursor-pointer flex items-center justify-between">
                 <h1 className="ml-5 text-2xl">{user.username}</h1>
+                <Button variant="text">Message</Button>
               </div>
             );
           })}
