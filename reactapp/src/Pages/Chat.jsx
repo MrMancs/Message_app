@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -30,6 +30,10 @@ export default function Chat() {
       console.log(response);
     });
   };
+
+  useEffect(() => {
+    handleSearch("");
+  }, []);
 
   return (
     <div className="bg-linear-to-r from-red-200 to-orange-200 h-screen">
