@@ -20,7 +20,7 @@ export default function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setToastData={setToastData} />} />
         <Route path="/register" element={<Register setToastData={setToastData} />} />
         <Route path="/chat" element={<Chat />} />
       </Routes>
