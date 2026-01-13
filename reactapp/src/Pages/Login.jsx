@@ -5,28 +5,38 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-export default function Login() {
+export default function Login(setToastData) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    })
-    .then(async (responseJSON) => {
-      const response = await responseJSON.json()
-      console.log(response)
-    }).catch((error) => {
-      console.error(error)
-    })
+    if (email.length == 0 || password.length == 0) {
+      fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      }).then(async (responseJSON) => {
+        const response = await responseJSON.json();
+        console.log(response);
+      });
+      setToastData({
+        open: true,
+        message: "Login successful!",
+        severity: "success",
+      });
 
-    navigate("/chat")
+      navigate("/chat");
+    } else {
+      setToastData({
+        open: false,
+        message: "Login failed!",
+        severity: "error",
+      });
+    }
   };
 
   return (
