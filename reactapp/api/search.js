@@ -8,17 +8,15 @@ export default async function Search(req, res) {
   try {
     const { search } = req.body;
 
-    const result = await pool.query("SELECT * FROM users WHERE username = $1", [search])
+    const result = await pool.query("SELECT * FROM users WHERE username = $1", [
+      search,
+    ]);
 
-    return (res.status(200).json({ users: result, search,}))
-
-    /*
-    if(result.rows.length === 0) {
-        return res.status(401).json({ message: "Invalid user" });
+    if (result.rows.length === 0) {
+      return res.status(401).json({ message: "Invalid user" });
     } else {
-        return res.status(200).json({ message: "User found" });
-    }*/
-
+      return res.status(200).json({ users: result.rows });
+    }
   } catch (error) {
     return res.status(500).json({ message: "Error while searching" });
   }
