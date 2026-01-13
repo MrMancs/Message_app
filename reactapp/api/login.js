@@ -13,7 +13,7 @@ export default async function Login(req, res) {
       password,
     ]);
 
-    console.log(result)
+    console.log(result.rows)
 
     return res.status(200).json({ message: "Login Successful!" });
   } catch (error) {
