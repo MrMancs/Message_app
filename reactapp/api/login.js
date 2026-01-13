@@ -23,3 +23,4 @@ export default async function Login(req, res) {
     return res.status(500).json({ message: "Error while logging in!" });
   }
 }
+//TODO hash passwords
