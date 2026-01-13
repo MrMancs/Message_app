@@ -12,7 +12,7 @@ export default function Login(setToastData) {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    if (email.length == 0 || password.length == 0) {
+    if (email.length != 0 || password.length != 0) {
       fetch("/api/login", {
         method: "POST",
         headers: {
