@@ -10,7 +10,7 @@ export default async function Search(req, res) {
 
     const result = await pool.query("SELECT * FROM users")
 
-    return (res.status(200).json({ users: result}))
+    return (res.status(200).json({ users: result, search,}))
 
     /*
     if(result.rows.length === 0) {
