@@ -30,13 +30,12 @@ export default function Login({ setToastData }) {
             severity: "success",
           });
           navigate("/chat");
-        } else {
-          setToastData({
-            open: false,
-            message: "Login failed!",
-            severity: "error",
-          });
         }
+      });
+      setToastData({
+        open: false,
+        message: "Login failed!",
+        severity: "error",
       });
     }
   };
