@@ -36,8 +36,8 @@ export default function Chat() {
       <div className="bg-white/50 h-screen max-w-sm border-r flex flex-col items-center">
         <div className="flex flex-row mt-3 mb-3">
           <h1 className="text-2xl mt-5 mb-5 text-black mr-5">
-            Your chats,
-            <span className="block text-sm text-gray-600">
+            Your chats, 
+            <span className="text-gray-600">
               {currentUser?.username}
             </span>
           </h1>
@@ -47,7 +47,7 @@ export default function Chat() {
               navigate("/");
             }}
             variant="outlined"
-            style={{ marginTop: "10px", marginBottom: "10px" }}
+            style={{ marginTop: "10px", marginBottom: "10px", color: "gray", borderColor: "gray" }}
           >
             Logout
           </Button>
@@ -73,8 +73,8 @@ export default function Chat() {
           {users.map((user) => {
             return (
               <div className="w-full h-20 bg-white/80 border-t hover:bg-gray-200 cursor-pointer flex items-center justify-between">
-                <h1 className="ml-5 text-2xl">{user.username}</h1>
-                <Button variant="text">Message</Button>
+                <h1 className="ml-5 text-xl">{user.username}</h1>
+                <Button variant="text" style={{marginRight: "20px", color: "gray"}}>Message</Button>
               </div>
             );
           })}
