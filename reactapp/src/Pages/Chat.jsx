@@ -10,7 +10,7 @@ export default function Chat() {
 
   const [search, setSearch] = useState("");
 
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
 
   const handleSearch = (e) => {
     fetch("/api/search", {
@@ -21,6 +21,7 @@ export default function Chat() {
       body: JSON.stringify({ search }),
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
+      setUsers(response)
       console.log(response);
     });
   };
