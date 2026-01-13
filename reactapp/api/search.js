@@ -12,7 +12,7 @@ export default async function Search(req, res) {
       search,
     ]);
 
-    return (res.status(200).json({ users: result.rows}))
+    return (res.status(200).json({ users: result}))
 
     /*
     if(result.rows.length === 0) {
