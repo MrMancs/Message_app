@@ -13,9 +13,12 @@ export default async function Login(req, res) {
       password,
     ]);
 
-    console.log(result.rows)
+    if(result.rows.length === 0) {
+        return res.status(401).json({ message: "Invalid email or password!" });
+    } else {
+        return res.status(200).json({ message: "Login Successful!" });
+    }
 
-    return res.status(200).json({ message: "Login Successful!" });
   } catch (error) {
     return res.status(500).json({ message: "Error while logging in!" });
   }
