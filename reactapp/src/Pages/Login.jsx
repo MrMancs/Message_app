@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-export default function Login(setToastData) {
+export default function Login({ setToastData }) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -23,6 +23,7 @@ export default function Login(setToastData) {
         const response = await responseJSON.json();
         console.log(response);
       });
+
       setToastData({
         open: true,
         message: "Login successful!",
