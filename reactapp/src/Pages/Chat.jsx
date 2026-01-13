@@ -12,16 +12,16 @@ export default function Chat() {
 
   const [users, setUsers] = useState([]);
 
-  const handleSearch = (e) => {
+  const handleSearch = (value) => {
     fetch("/api/search", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ search }),
+      body: JSON.stringify({ search: value }),
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
-      setUsers(response)
+      setUsers(response.users);
       console.log(response);
     });
   };
@@ -47,9 +47,9 @@ export default function Chat() {
           className="max-w-62.5"
           style={{ marginBottom: "30px" }}
           onChange={(e) => {
-            setSearch(e.target.value);
-
-            handleSearch(e);
+            const value = e.target.value;
+            setSearch(value);
+            handleSearch(value);
           }}
         />
 
