@@ -6,11 +6,11 @@ export default async function Search(req, res) {
   });
 
   try {
-    const { search } = req.body;
+    const { search, currentUser } = req.body;
 
     const result = await pool.query(
-      "SELECT * FROM users WHERE username ILIKE $1",
-      [`%${search}%`]
+      "SELECT * FROM users WHERE username ILIKE $1 AND username != $2",
+      [`%${search}%`, currentUser]
     );
 
     return res.json({ users: result.rows });

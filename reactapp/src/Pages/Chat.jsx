@@ -12,13 +12,18 @@ export default function Chat() {
 
   const [users, setUsers] = useState([]);
 
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   const handleSearch = (value) => {
     fetch("/api/search", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ search: value }),
+      body: JSON.stringify({
+        search: value,
+        currentUser: currentUser.username,
+      }),
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
       setUsers(response.users);
@@ -32,7 +37,10 @@ export default function Chat() {
         <div className="flex flex-row mt-3 mb-3">
           <h1 className="text-2xl mt-5 mb-5 text-black mr-5">Your chats</h1>
           <Button
-            onClick={() => navigate("/")}
+            onClick={() => {
+              localStorage.removeItem("user");
+              navigate("/");
+            }}
             variant="outlined"
             style={{ marginTop: "10px", marginBottom: "10px" }}
           >
@@ -53,7 +61,17 @@ export default function Chat() {
           }}
         />
 
-        <div className="w-full overflow-auto">
+        <div>
+          <Button variant="outlined" style={{ marginRight: "20px" }}>
+            Others
+          </Button>
+          <Button variant="outlined">Friends</Button>
+        </div>
+
+        <div
+          className="w-full overflow-auto"
+          style={{ overscrollBehavior: "none" }}
+        >
           {users.map((user) => {
             return (
               <div className="w-full h-20 bg-white/80 border-t hover:bg-gray-200 cursor-pointer flex items-center">

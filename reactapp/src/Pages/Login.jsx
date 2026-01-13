@@ -29,6 +29,16 @@ export default function Login({ setToastData }) {
             message: "Login successful!",
             severity: "success",
           });
+
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              id: response.user.id,
+              username: response.user.username,
+              email: response.user.email,
+            })
+          );
+
           navigate("/chat");
         } else {
           setToastData({
