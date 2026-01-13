@@ -21,7 +21,8 @@ export default function Chat() {
       body: JSON.stringify({ search }),
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
-      console.log(response)
+      console.log(response);
+      console.log(JSON.stringify({ search }));
     });
   };
 
@@ -48,7 +49,7 @@ export default function Chat() {
           onChange={(e) => {
             setSearch(e.target.value);
 
-            handleSearch(e)
+            handleSearch(e);
           }}
         />
 
