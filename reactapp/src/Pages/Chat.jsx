@@ -53,13 +53,15 @@ export default function Chat() {
           }}
         />
 
-        {users.map((user) => {
-          return (
-            <div className="w-full h-20 bg-white/80 border-b border-t hover:bg-gray-200 cursor-pointer flex items-center">
-              <h1 className="ml-5 text-2xl">{user.username}</h1>
-            </div>
-          );
-        })}
+        <div>
+          {users.map((user) => {
+            return (
+              <div className="w-full h-20 bg-white/80 border-b border-t hover:bg-gray-200 cursor-pointer flex items-center overflow-auto">
+                <h1 className="ml-5 text-2xl">{user.username}</h1>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
