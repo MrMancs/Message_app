@@ -167,7 +167,7 @@ export default function Chat() {
               </Button>
             </div>
 
-            <div style={{ width: "100%", overflowY: "auto" }}>
+            <div style={{ width: "100%", overflowY: "auto", overscrollBehavior: "none" }}>
               {users.map((user) => (
                 <div
                   key={user.id}
