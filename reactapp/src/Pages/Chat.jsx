@@ -40,15 +40,21 @@ export default function Chat() {
       <div className="bg-white/50 h-screen max-w-sm border-r flex flex-col items-center">
         <div className="flex flex-row mt-3 mb-3">
           <h1 className="text-2xl mt-5 mb-5 text-black mr-5">
-            Your chats,<span className="text-gray-600"> {currentUser?.username}</span>
+            Your chats,
+            <span className="text-gray-600"> {currentUser?.username}</span>
           </h1>
           <Button
             onClick={() => {
-              localStorage.removeItem("user");  
+              localStorage.removeItem("user");
               navigate("/");
             }}
             variant="outlined"
-            style={{ marginTop: "10px", marginBottom: "10px", color: "gray", borderColor: "gray" }}
+            style={{
+              marginTop: "10px",
+              marginBottom: "10px",
+              color: "gray",
+              borderColor: "gray",
+            }}
           >
             Logout
           </Button>
@@ -73,9 +79,20 @@ export default function Chat() {
         >
           {users.map((user) => {
             return (
-              <div className="w-full h-20 bg-white/80 border-t hover:bg-gray-200 cursor-pointer flex items-center justify-between">
+              <div
+                className="w-full h-20 border-t hover:brightness-90 cursor-pointer flex items-center justify-between"
+                style={{
+                  background:
+                    "linear-gradient(to right, rgba(255, 0, 0, 0.2), rgba(255, 165, 0, 0.2))",
+                }}
+              >
                 <h1 className="ml-5 text-xl">{user.username}</h1>
-                <Button variant="text" style={{marginRight: "20px", color: "gray"}}>Message</Button>
+                <Button
+                  variant="text"
+                  style={{ marginRight: "20px", color: "gray" }}
+                >
+                  Message
+                </Button>
               </div>
             );
           })}
