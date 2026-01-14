@@ -134,7 +134,8 @@ export default function Chat() {
               backgroundColor: "white",
               height: "700px",
               width: "800px",
-              borderRadius: "16px",
+              borderTopLeftRadius: "16px",
+              borderTopRightRadius: "16px",
               border: "1px solid black",
               fontSize: "24px",
               display: "flex",
@@ -146,6 +147,7 @@ export default function Chat() {
                 display: "flex",
                 justifyContent: "flex-end",
                 padding: "10px",
+                borderBottom: "1px solid black",
               }}
             >
               <Button
