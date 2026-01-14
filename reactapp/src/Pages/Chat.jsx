@@ -38,8 +38,8 @@ export default function Chat() {
   return (
     <div className="bg-linear-to-r from-red-200 to-orange-200 h-screen">
       <div className="bg-white/50 h-screen max-w-sm border-r flex flex-col items-center">
-        <div className="flex flex-row mt-3 mb-3">
-          <h1 className="text-2xl mt-5 mb-5 text-black mr-5">
+        <div className="flex flex-row mt-10 mb-5">
+          <h1 className="text-2xl text-black mr-5">
             Your chats,
             <span className="text-gray-600"> {currentUser?.username}</span>
           </h1>
@@ -65,7 +65,7 @@ export default function Chat() {
           label="Search"
           variant="outlined"
           className="max-w-62.5"
-          style={{ marginBottom: "30px" }}
+          style={{ marginBottom: "20px" }}
           onChange={(e) => {
             const value = e.target.value;
             setSearch(value);
@@ -76,7 +76,7 @@ export default function Chat() {
         <Button style={{color: "gray", borderColor: "gray"}} variant="outlined" onClick={() => console.log("asdasd")}>Others</Button>
 
         <div
-          className="w-full overflow-auto"
+          className="w-full overflow-auto mt-5"
           style={{ overscrollBehavior: "none" }}
         >
           {users.map((user) => {
