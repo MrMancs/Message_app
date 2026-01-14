@@ -75,11 +75,15 @@ export default function Chat() {
           </h1>
 
           {!isMobileView && (
-            <div>
+            <div className="flex">
               <Button
                 variant="outlined"
                 onClick={() => setShowTestMessage(true)}
-                style={{ marginRight: "10px", color: "gray", borderColor: "gray" }}
+                style={{
+                  marginRight: "10px",
+                  color: "gray",
+                  borderColor: "gray",
+                }}
               >
                 Others
               </Button>
@@ -222,13 +226,13 @@ export default function Chat() {
             inset: 0,
             backgroundColor: "white",
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
             zIndex: 3000,
             fontSize: "24px",
           }}
         >
-          TEST
+          <div className="flex justify-end mt-4 mr-4">
+            <Button style={{ color: "gray", borderColor: "gray" }} onClick={() => setShowTestMessage(false)}>X</Button>
+          </div>
         </div>
       )}
     </div>
