@@ -30,8 +30,6 @@ export default function Chat() {
   };
 
   useEffect(() => {
-    handleSearch("");
-
     const checkMobile = () => {
       setIsMobileView(window.innerWidth <= 768);
     };
@@ -78,7 +76,10 @@ export default function Chat() {
             <div className="flex">
               <Button
                 variant="outlined"
-                onClick={() => setShowTestMessage(true)}
+                onClick={() => {
+                  setShowTestMessage(true);
+                  handleSearch("");
+                }}
                 style={{
                   marginRight: "10px",
                   color: "gray",
@@ -111,13 +112,6 @@ export default function Chat() {
             </Button>
           )}
         </div>
-
-        <TextField
-          label="Search"
-          variant="outlined"
-          style={{ width: "80%", marginBottom: "20px" }}
-          onChange={(e) => handleSearch(e.target.value)}
-        />
       </div>
 
       {!isMobileView && showTestMessage && (
@@ -145,11 +139,17 @@ export default function Chat() {
             <div
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "space-between",
                 padding: "10px",
                 borderBottom: "1px solid black",
               }}
             >
+              <TextField
+                label="Search"
+                variant="outlined"
+                style={{ width: "80%", marginBottom: "20px" }}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
               <Button
                 style={{
                   color: "gray",
