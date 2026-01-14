@@ -230,8 +230,15 @@ export default function Chat() {
             fontSize: "24px",
           }}
         >
-          <div className="flex justify-end mt-4 mr-4">
-            <Button style={{ color: "gray", borderColor: "gray" }} onClick={() => setShowTestMessage(false)}>X</Button>
+          <div className="flex justify-end w-full mt-4 mr-4">
+            <Button
+              style={{ color: "gray", borderColor: "gray" }}
+              onClick={() => setShowTestMessage(false)}
+              variant="outlined"
+              className="h-10"
+            >
+              X
+            </Button>
           </div>
         </div>
       )}
