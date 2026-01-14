@@ -138,16 +138,33 @@ export default function Chat() {
               border: "1px solid black",
               fontSize: "24px",
               display: "flex",
-              justifyContent: "flex-end",
+              flexDirection: "column",
             }}
           >
-            <Button
-              style={{ color: "gray", borderColor: "gray", height: "40px", marginTop: "10px", marginRight: "10px", marginBottom: "10px" }}
-              onClick={() => setShowTestMessage(false)}
-              variant="outlined"
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                padding: "10px",
+              }}
             >
-              X
-            </Button>
+              <Button
+                style={{
+                  color: "gray",
+                  borderColor: "gray",
+                  height: "40px",
+                  width: "40px",
+                  marginTop: "10px",
+                  marginRight: "10px",
+                  marginBottom: "10px",
+                }}
+                onClick={() => setShowTestMessage(false)}
+                variant="outlined"
+              >
+                X
+              </Button>
+            </div>
+
             <div style={{ width: "100%", overflowY: "auto" }}>
               {users.map((user) => (
                 <div
@@ -158,7 +175,6 @@ export default function Chat() {
                     background:
                       "linear-gradient(to right, rgba(255,0,0,0.2), rgba(255,165,0,0.2))",
                     display: "flex",
-                    flexDirection: "column",
                     justifyContent: "space-between",
                     alignItems: "center",
                     padding: "0 20px",
