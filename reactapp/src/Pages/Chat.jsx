@@ -167,7 +167,13 @@ export default function Chat() {
               </Button>
             </div>
 
-            <div style={{ width: "100%", overflowY: "auto", overscrollBehavior: "none" }}>
+            <div
+              style={{
+                width: "100%",
+                overflowY: "auto",
+                overscrollBehavior: "none",
+              }}
+            >
               {users.map((user) => (
                 <div
                   key={user.id}
@@ -257,15 +263,64 @@ export default function Chat() {
             fontSize: "24px",
           }}
         >
-          <div className="flex justify-end w-full mt-4 mr-4">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "10px",
+              borderBottom: "1px solid black",
+            }}
+          >
+            <TextField
+              label="Search"
+              variant="outlined"
+              style={{ width: "80%", marginBottom: "20px" }}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
             <Button
-              style={{ color: "gray", borderColor: "gray" }}
+              style={{
+                color: "gray",
+                borderColor: "gray",
+                height: "40px",
+                width: "40px",
+                marginTop: "10px",
+                marginRight: "10px",
+                marginBottom: "10px",
+              }}
               onClick={() => setShowTestMessage(false)}
               variant="outlined"
-              className="h-10"
             >
               X
             </Button>
+          </div>
+
+          <div
+            style={{
+              width: "100%",
+              overflowY: "auto",
+              overscrollBehavior: "none",
+            }}
+          >
+            {users.map((user) => (
+              <div
+                key={user.id}
+                style={{
+                  height: "80px",
+                  borderTop: "1px solid black",
+                  background:
+                    "linear-gradient(to right, rgba(255,0,0,0.2), rgba(255,165,0,0.2))",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "0 20px",
+                }}
+              >
+                <span style={{ fontSize: "20px" }}>{user.username}</span>
+                <Button variant="text" style={{ color: "gray" }}>
+                  Add
+                </Button>
+              </div>
+            ))}
           </div>
         </div>
       )}
