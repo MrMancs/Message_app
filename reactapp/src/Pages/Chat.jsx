@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
@@ -9,13 +8,9 @@ export default function Chat() {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
-
   const [users, setUsers] = useState([]);
-
   const [showTestMessage, setShowTestMessage] = useState(false);
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const [isMobileView, setIsMobileView] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -23,22 +18,15 @@ export default function Chat() {
   const handleSearch = (value) => {
     fetch("/api/search", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         search: value,
         currentUser: currentUser.username,
       }),
-    }).then(async (responseJSON) => {
-      const response = await responseJSON.json();
-      setUsers(response.users);
-      console.log(response);
+    }).then(async (res) => {
+      const data = await res.json();
+      setUsers(data.users || []);
     });
-  };
-
-  const showTest = () => {
-    setShowTestMessage(true);
   };
 
   useEffect(() => {
@@ -50,13 +38,28 @@ export default function Chat() {
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
-
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   return (
-    <div className="bg-linear-to-r from-red-200 to-orange-200 flex flex-row h-screen">
-      <div className="bg-white/50 h-screen max-w-sm border-r flex flex-col items-center">
+    <div
+      style={{
+        display: "flex",
+        height: "100vh",
+        background: "linear-gradient(to right, #fecaca, #fed7aa)",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        style={{
+          width: isMobileView ? "100%" : "24rem",
+          backgroundColor: "rgba(255,255,255,0.6)",
+          borderRight: isMobileView ? "none" : "1px solid rgba(0,0,0,0.2)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <div
           style={{
             width: "100%",
@@ -66,32 +69,28 @@ export default function Chat() {
             alignItems: "center",
           }}
         >
-          <h1 className="text-2xl text-black mr-5">
+          <h1 style={{ fontSize: "22px" }}>
             Your chats,
-            <span className="text-gray-600"> {currentUser?.username}</span>
+            <span style={{ color: "gray" }}> {currentUser?.username}</span>
           </h1>
 
           {!isMobileView && (
             <div>
               <Button
-                onClick={showTest}
                 variant="outlined"
-                style={{
-                  color: "gray",
-                  borderColor: "gray",
-                  marginRight: "10px",
-                }}
+                onClick={() => setShowTestMessage(true)}
+                style={{ marginRight: "10px", color: "gray" }}
               >
                 Others
               </Button>
 
               <Button
+                variant="outlined"
+                style={{ color: "gray" }}
                 onClick={() => {
                   localStorage.removeItem("user");
                   navigate("/");
                 }}
-                variant="outlined"
-                style={{ color: "gray", borderColor: "gray" }}
               >
                 Logout
               </Button>
@@ -101,146 +100,126 @@ export default function Chat() {
           {isMobileView && (
             <Button
               variant="outlined"
-              style={{ color: "gray", borderColor: "gray" }}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              style={{ color: "gray" }}
+              onClick={() => setIsMobileMenuOpen(true)}
             >
               ☰
             </Button>
           )}
-
-          {isMobileView && isMobileMenuOpen && (
-            <div
-              style={{
-                width: "100%",
-                backgroundColor: "white",
-                borderBottom: "1px solid #ccc",
-                padding: "10px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-              }}
-            >
-              <Button
-                variant="outlined"
-                style={{ color: "gray", borderColor: "gray" }}
-                onClick={() => {
-                  showTest();
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                Others
-              </Button>
-
-              <Button
-                variant="outlined"
-                style={{ color: "gray", borderColor: "gray" }}
-                onClick={() => {
-                  localStorage.removeItem("user");
-                  navigate("/");
-                }}
-              >
-                Logout
-              </Button>
-            </div>
-          )}
         </div>
 
         <TextField
-          id="outlined-basic"
           label="Search"
           variant="outlined"
-          className="max-w-62.5"
-          style={{ marginBottom: "20px" }}
-          onChange={(e) => {
-            const value = e.target.value;
-            setSearch(value);
-            handleSearch(value);
-          }}
+          style={{ width: "80%", marginBottom: "20px" }}
+          onChange={(e) => handleSearch(e.target.value)}
         />
 
-        <div
-          className="w-full overflow-auto mt-5 border-t"
-          style={{ overscrollBehavior: "none" }}
-        >
-          {users.map((user) => {
-            return (
-              <div
-                className="w-full h-20 border-t hover:brightness-90 cursor-pointer flex items-center justify-between"
-                style={{
-                  background:
-                    "linear-gradient(to right, rgba(255, 0, 0, 0.2), rgba(255, 165, 0, 0.2))",
-                }}
-              >
-                <h1 className="ml-5 text-xl">{user.username}</h1>
-                <Button
-                  variant="text"
-                  style={{ marginRight: "20px", color: "gray" }}
-                >
-                  Message
-                </Button>
-              </div>
-            );
-          })}
+        <div style={{ width: "100%", overflowY: "auto" }}>
+          {users.map((user) => (
+            <div
+              key={user.id}
+              style={{
+                height: "80px",
+                borderTop: "1px solid black",
+                background:
+                  "linear-gradient(to right, rgba(255,0,0,0.2), rgba(255,165,0,0.2))",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "0 20px",
+              }}
+            >
+              <span style={{ fontSize: "20px" }}>{user.username}</span>
+              <Button variant="text" style={{ color: "gray" }}>
+                Message
+              </Button>
+            </div>
+          ))}
         </div>
       </div>
 
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {showTestMessage && (
+      {!isMobileView && showTestMessage && (
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <div
             style={{
               backgroundColor: "white",
-              margin: "20px",
               padding: "50px",
-              border: "1px solid black",
               borderRadius: "16px",
-              minWidth: "30vh",
-              minHeight: "20vh",
-              maxWidth: "80vh",
-              maxHeight: "60vh",
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "24px",
-              fontWeight: "500",
-            }}
-          >
-            TEST
-          </div>
-        )}
-
-        {showTestMessage && (
-          <div
-            style={{
-              position: isMobileView ? "fixed" : "relative",
-              top: isMobileView ? 0 : "auto",
-              left: isMobileView ? 0 : "auto",
-              width: isMobileView ? "100vw" : "100%",
-              height: isMobileView ? "100vh" : "100%",
-              backgroundColor: "white",
-              padding: "50px",
               border: "1px solid black",
-              borderRadius: isMobileView ? "0px" : "16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
               fontSize: "24px",
-              fontWeight: "500",
-              zIndex: 1000,
             }}
           >
             TEST
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {isMobileView && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: isMobileMenuOpen ? 0 : "-100%",
+            width: "70%",
+            height: "100vh",
+            backgroundColor: "white",
+            padding: "20px",
+            borderRadius: "0 16px 16px 0",
+            boxShadow: "2px 0 10px rgba(0,0,0,0.3)",
+            transition: "left 0.3s ease",
+            zIndex: 2000,
+          }}
+        >
+          <Button
+            fullWidth
+            variant="outlined"
+            style={{ marginBottom: "10px", color: "gray" }}
+            onClick={() => {
+              setShowTestMessage(true);
+              setIsMobileMenuOpen(false);
+            }}
+          >
+            Others
+          </Button>
+
+          <Button
+            fullWidth
+            variant="outlined"
+            style={{ color: "gray" }}
+            onClick={() => {
+              localStorage.removeItem("user");
+              navigate("/");
+            }}
+          >
+            Logout
+          </Button>
+        </div>
+      )}
+
+      {isMobileView && showTestMessage && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            backgroundColor: "white",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 3000,
+            fontSize: "24px",
+          }}
+        >
+          TEST
+        </div>
+      )}
     </div>
   );
 }
