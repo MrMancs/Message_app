@@ -12,6 +12,8 @@ export default function Chat() {
 
   const [users, setUsers] = useState([]);
 
+  const [showTestMessage, setShowTestMessage] = useState(false);
+
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const handleSearch = (value) => {
@@ -32,7 +34,7 @@ export default function Chat() {
   };
 
   const showTest = () => {
-    console.log("TEST");
+    setShowTestMessage(true);
   }
 
   useEffect(() => {
@@ -104,8 +106,7 @@ export default function Chat() {
       </div>
 
       <div>
-        
-        <h1>TEST</h1>
+        {showTestMessage && <h1>TEST</h1>}
       </div>
     </div>
   );
