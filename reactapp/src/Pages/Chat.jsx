@@ -36,9 +36,9 @@ export default function Chat() {
   }, []);
 
   return (
-    <div className="bg-linear-to-r from-red-200 to-orange-200 h-screen">
+    <div className="bg-linear-to-r from-red-200 to-orange-200 flex flex-row h-screen">
       <div className="bg-white/50 h-screen max-w-sm border-r flex flex-col items-center">
-        <div className="flex flex-row mt-10 mb-5">
+        <div className="flex flex-row mt-10 mb-5 ml-5 mr-5">
           <h1 className="text-2xl text-black mr-5">
             Your chats,
             <span className="text-gray-600"> {currentUser?.username}</span>
@@ -50,8 +50,6 @@ export default function Chat() {
             }}
             variant="outlined"
             style={{
-              marginTop: "10px",
-              marginBottom: "10px",
               color: "gray",
               borderColor: "gray",
             }}
@@ -76,7 +74,7 @@ export default function Chat() {
         <Button style={{color: "gray", borderColor: "gray"}} variant="outlined" onClick={() => console.log("asdasd")}>Others</Button>
 
         <div
-          className="w-full overflow-auto mt-5"
+          className="w-full overflow-auto mt-5 border-t"
           style={{ overscrollBehavior: "none" }}
         >
           {users.map((user) => {
