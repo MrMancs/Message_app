@@ -139,12 +139,10 @@ export default function Chat() {
               fontSize: "24px",
               display: "flex",
               justifyContent: "flex-end",
-              paddingTop: "10px",
-              paddingRight: "10px",
             }}
           >
             <Button
-              style={{ color: "gray", borderColor: "gray", height: "40px" }}
+              style={{ color: "gray", borderColor: "gray", height: "40px", marginTop: "10px", marginRight: "10px", marginBottom: "10px" }}
               onClick={() => setShowTestMessage(false)}
               variant="outlined"
             >
@@ -160,6 +158,7 @@ export default function Chat() {
                     background:
                       "linear-gradient(to right, rgba(255,0,0,0.2), rgba(255,165,0,0.2))",
                     display: "flex",
+                    flexDirection: "column",
                     justifyContent: "space-between",
                     alignItems: "center",
                     padding: "0 20px",
