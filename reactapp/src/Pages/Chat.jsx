@@ -12,8 +12,6 @@ export default function Chat() {
 
   const [users, setUsers] = useState([]);
 
-  const [seeOthers, setSeeOthers] = useState(false);
-
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const handleSearch = (value) => {
@@ -32,14 +30,6 @@ export default function Chat() {
       console.log(response);
     });
   };
-
-  const showOthers = () => {
-    setSeeOthers(true)
-  }
-
-  const closeOthers = () => {
-    setSeeOthers(false)
-  }
 
   useEffect(() => {
     handleSearch("");
@@ -83,7 +73,7 @@ export default function Chat() {
           }}
         />
 
-        <Button style={{color: "gray", borderColor: "gray"}} variant="outlined" onClick={showOthers()}>Others</Button>
+        <Button style={{color: "gray", borderColor: "gray"}} variant="outlined" onClick={() => console.log("asdasd")}>Others</Button>
 
         <div
           className="w-full overflow-auto"
@@ -112,7 +102,7 @@ export default function Chat() {
       </div>
 
       <div>
-        {seeOthers ? <div className="w-50 h-50">Others</div> : null}
+        <h1>TEST</h1>
       </div>
     </div>
   );
