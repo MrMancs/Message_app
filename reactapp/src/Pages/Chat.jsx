@@ -222,6 +222,8 @@ export default function Chat() {
             onClick={() => {
               setShowTestMessage(true);
               setIsMobileMenuOpen(false);
+
+              handleSearch("");
             }}
           >
             Others
@@ -259,6 +261,7 @@ export default function Chat() {
             inset: 0,
             backgroundColor: "white",
             display: "flex",
+            flexDirection: "column",
             zIndex: 3000,
             fontSize: "24px",
           }}
