@@ -111,9 +111,33 @@ export default function Chat() {
         </div>
       </div>
 
-      <div>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {showTestMessage && (
-          <div className="flex flex-col items-center justify-center h-screen w-screen">TEST</div>
+          <div
+            style={{
+              backgroundColor: "white",
+              margin: "20px", 
+              padding: "50px", 
+              border: "1px solid #d1d5db", 
+              borderRadius: "16px",
+              minWidth: "300px",
+              minHeight: "200px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "24px",
+              fontWeight: "500",
+            }}
+          >
+            TEST
+          </div>
         )}
       </div>
     </div>
