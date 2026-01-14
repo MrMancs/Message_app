@@ -201,6 +201,17 @@ export default function Chat() {
           >
             Logout
           </Button>
+
+          <Button
+            fullWidth
+            variant="outlined"
+            style={{ marginBottom: "10px", color: "gray" }}
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+            }}
+          >
+            Close
+          </Button>
         </div>
       )}
 
