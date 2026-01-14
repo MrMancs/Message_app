@@ -155,13 +155,18 @@ export default function Chat() {
           <div
             style={{
               backgroundColor: "white",
-              padding: "50px",
+              height: "700px",
+              width: "600px",
               borderRadius: "16px",
               border: "1px solid black",
               fontSize: "24px",
+              display: "flex",
+              justifyContent: "flex-end",
+              paddingTop: "10px",
+              paddingRight: "10px",
             }}
           >
-            TEST
+            <Button style={{color: "gray", borderColor: "gray"}} onClick={() => setShowTestMessage(false)} variant="outlined">X</Button>
           </div>
         </div>
       )}
