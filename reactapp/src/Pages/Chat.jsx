@@ -14,6 +14,10 @@ export default function Chat() {
 
   const [showTestMessage, setShowTestMessage] = useState(false);
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const [isMobileView, setIsMobileView] = useState(false);
+
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const handleSearch = (value) => {
@@ -39,29 +43,106 @@ export default function Chat() {
 
   useEffect(() => {
     handleSearch("");
+
+    const checkMobile = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   return (
     <div className="bg-linear-to-r from-red-200 to-orange-200 flex flex-row h-screen">
       <div className="bg-white/50 h-screen max-w-sm border-r flex flex-col items-center">
-        <div className="flex flex-row mt-10 mb-5 ml-5 mr-5">
+        <div
+          style={{
+            width: "100%",
+            padding: "20px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <h1 className="text-2xl text-black mr-5">
             Your chats,
             <span className="text-gray-600"> {currentUser?.username}</span>
           </h1>
-          <Button
-            onClick={() => {
-              localStorage.removeItem("user");
-              navigate("/");
-            }}
-            variant="outlined"
-            style={{
-              color: "gray",
-              borderColor: "gray",
-            }}
-          >
-            Logout
-          </Button>
+
+          {!isMobileView && (
+            <div>
+              <Button
+                onClick={showTest}
+                variant="outlined"
+                style={{
+                  color: "gray",
+                  borderColor: "gray",
+                  marginRight: "10px",
+                }}
+              >
+                Others
+              </Button>
+
+              <Button
+                onClick={() => {
+                  localStorage.removeItem("user");
+                  navigate("/");
+                }}
+                variant="outlined"
+                style={{ color: "gray", borderColor: "gray" }}
+              >
+                Logout
+              </Button>
+            </div>
+          )}
+
+          {isMobileView && (
+            <Button
+              variant="outlined"
+              style={{ color: "gray", borderColor: "gray" }}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              ☰
+            </Button>
+          )}
+
+          {isMobileView && isMobileMenuOpen && (
+            <div
+              style={{
+                width: "100%",
+                backgroundColor: "white",
+                borderBottom: "1px solid #ccc",
+                padding: "10px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              <Button
+                variant="outlined"
+                style={{ color: "gray", borderColor: "gray" }}
+                onClick={() => {
+                  showTest();
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                Others
+              </Button>
+
+              <Button
+                variant="outlined"
+                style={{ color: "gray", borderColor: "gray" }}
+                onClick={() => {
+                  localStorage.removeItem("user");
+                  navigate("/");
+                }}
+              >
+                Logout
+              </Button>
+            </div>
+          )}
         </div>
 
         <TextField
@@ -76,14 +157,6 @@ export default function Chat() {
             handleSearch(value);
           }}
         />
-
-        <Button
-          style={{ color: "gray", borderColor: "gray" }}
-          variant="outlined"
-          onClick={() => showTest()}
-        >
-          Others
-        </Button>
 
         <div
           className="w-full overflow-auto mt-5 border-t"
@@ -123,9 +196,9 @@ export default function Chat() {
           <div
             style={{
               backgroundColor: "white",
-              margin: "20px", 
-              padding: "50px", 
-              border: "1px solid black", 
+              margin: "20px",
+              padding: "50px",
+              border: "1px solid black",
               borderRadius: "16px",
               minWidth: "30vh",
               minHeight: "20vh",
@@ -138,6 +211,30 @@ export default function Chat() {
               justifyContent: "center",
               fontSize: "24px",
               fontWeight: "500",
+            }}
+          >
+            TEST
+          </div>
+        )}
+
+        {showTestMessage && (
+          <div
+            style={{
+              position: isMobileView ? "fixed" : "relative",
+              top: isMobileView ? 0 : "auto",
+              left: isMobileView ? 0 : "auto",
+              width: isMobileView ? "100vw" : "100%",
+              height: isMobileView ? "100vh" : "100%",
+              backgroundColor: "white",
+              padding: "50px",
+              border: "1px solid black",
+              borderRadius: isMobileView ? "0px" : "16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "24px",
+              fontWeight: "500",
+              zIndex: 1000,
             }}
           >
             TEST
