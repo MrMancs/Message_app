@@ -54,7 +54,7 @@ export default function Chat() {
         style={{
           width: isMobileView ? "100%" : "24rem",
           backgroundColor: "rgba(255,255,255,0.6)",
-          borderRight: isMobileView ? "none" : "1px solid rgba(0,0,0,0.2)",
+          borderRight: isMobileView ? "none" : "1px solid black",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -118,29 +118,6 @@ export default function Chat() {
           style={{ width: "80%", marginBottom: "20px" }}
           onChange={(e) => handleSearch(e.target.value)}
         />
-
-        <div style={{ width: "100%", overflowY: "auto" }}>
-          {users.map((user) => (
-            <div
-              key={user.id}
-              style={{
-                height: "80px",
-                borderTop: "1px solid black",
-                background:
-                  "linear-gradient(to right, rgba(255,0,0,0.2), rgba(255,165,0,0.2))",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "0 20px",
-              }}
-            >
-              <span style={{ fontSize: "20px" }}>{user.username}</span>
-              <Button variant="text" style={{ color: "gray" }}>
-                Message
-              </Button>
-            </div>
-          ))}
-        </div>
       </div>
 
       {!isMobileView && showTestMessage && (
@@ -156,7 +133,7 @@ export default function Chat() {
             style={{
               backgroundColor: "white",
               height: "700px",
-              width: "600px",
+              width: "800px",
               borderRadius: "16px",
               border: "1px solid black",
               fontSize: "24px",
@@ -166,7 +143,35 @@ export default function Chat() {
               paddingRight: "10px",
             }}
           >
-            <Button style={{color: "gray", borderColor: "gray"}} onClick={() => setShowTestMessage(false)} variant="outlined">X</Button>
+            <Button
+              style={{ color: "gray", borderColor: "gray", height: "40px" }}
+              onClick={() => setShowTestMessage(false)}
+              variant="outlined"
+            >
+              X
+            </Button>
+            <div style={{ width: "100%", overflowY: "auto" }}>
+              {users.map((user) => (
+                <div
+                  key={user.id}
+                  style={{
+                    height: "80px",
+                    borderTop: "1px solid black",
+                    background:
+                      "linear-gradient(to right, rgba(255,0,0,0.2), rgba(255,165,0,0.2))",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "0 20px",
+                  }}
+                >
+                  <span style={{ fontSize: "20px" }}>{user.username}</span>
+                  <Button variant="text" style={{ color: "gray" }}>
+                    Add
+                  </Button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
