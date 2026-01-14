@@ -35,7 +35,7 @@ export default function Chat() {
 
   const showTest = () => {
     setShowTestMessage(true);
-  }
+  };
 
   useEffect(() => {
     handleSearch("");
@@ -77,7 +77,13 @@ export default function Chat() {
           }}
         />
 
-        <Button style={{color: "gray", borderColor: "gray"}} variant="outlined" onClick={() => showTest()}>Others</Button>
+        <Button
+          style={{ color: "gray", borderColor: "gray" }}
+          variant="outlined"
+          onClick={() => showTest()}
+        >
+          Others
+        </Button>
 
         <div
           className="w-full overflow-auto mt-5 border-t"
@@ -106,7 +112,9 @@ export default function Chat() {
       </div>
 
       <div>
-        {showTestMessage && <h1>TEST</h1>}
+        {showTestMessage && (
+          <div className="flex flex-col items-center justify-center h-screen w-screen">TEST</div>
+        )}
       </div>
     </div>
   );
