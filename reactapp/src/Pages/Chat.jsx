@@ -269,7 +269,6 @@ export default function Chat() {
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
               padding: "10px",
               borderBottom: "1px solid black",
             }}
@@ -277,7 +276,7 @@ export default function Chat() {
             <TextField
               label="Search"
               variant="outlined"
-              style={{ width: "80%", marginBottom: "20px" }}
+              style={{ width: "80%", marginBottom: "20px", marginRight: "10px" }}
               onChange={(e) => handleSearch(e.target.value)}
             />
             <Button
