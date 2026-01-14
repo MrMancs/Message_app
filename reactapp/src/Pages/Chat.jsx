@@ -79,14 +79,14 @@ export default function Chat() {
               <Button
                 variant="outlined"
                 onClick={() => setShowTestMessage(true)}
-                style={{ marginRight: "10px", color: "gray" }}
+                style={{ marginRight: "10px", color: "gray", borderColor: "gray" }}
               >
                 Others
               </Button>
 
               <Button
                 variant="outlined"
-                style={{ color: "gray" }}
+                style={{ color: "gray", borderColor: "gray" }}
                 onClick={() => {
                   localStorage.removeItem("user");
                   navigate("/");
@@ -100,7 +100,7 @@ export default function Chat() {
           {isMobileView && (
             <Button
               variant="outlined"
-              style={{ color: "gray" }}
+              style={{ color: "gray", borderColor: "gray" }}
               onClick={() => setIsMobileMenuOpen(true)}
             >
               ☰
@@ -181,7 +181,7 @@ export default function Chat() {
           <Button
             fullWidth
             variant="outlined"
-            style={{ marginBottom: "10px", color: "gray" }}
+            style={{ marginBottom: "10px", color: "gray", borderColor: "gray" }}
             onClick={() => {
               setShowTestMessage(true);
               setIsMobileMenuOpen(false);
@@ -193,7 +193,7 @@ export default function Chat() {
           <Button
             fullWidth
             variant="outlined"
-            style={{ color: "gray" }}
+            style={{ marginBottom: "10px", color: "gray", borderColor: "gray" }}
             onClick={() => {
               localStorage.removeItem("user");
               navigate("/");
@@ -205,7 +205,7 @@ export default function Chat() {
           <Button
             fullWidth
             variant="outlined"
-            style={{ marginBottom: "10px", color: "gray" }}
+            style={{ color: "gray", borderColor: "gray" }}
             onClick={() => {
               setIsMobileMenuOpen(false);
             }}
