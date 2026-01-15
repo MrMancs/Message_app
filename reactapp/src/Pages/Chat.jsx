@@ -102,7 +102,7 @@ export default function Chat({ setToastData }) {
           message: "Friend request accepted",
           severity: "success",
         });
-        setFriends(response.message)
+        setFriends((prev) => [...prev, response.message]);
       }
       console.log(friends)
     });
