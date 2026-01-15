@@ -13,6 +13,9 @@ export default async function Friends(req, res) {
       [receiverName, requesterName]
     );
 
+    console.log(result)
+    console.log(result.rows[0])
+
     return res.status(200).json({ reqName: result.rows[0].requester_name });
   } catch (error) { 
     console.log(error);
