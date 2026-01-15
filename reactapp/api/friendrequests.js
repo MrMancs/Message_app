@@ -13,11 +13,8 @@ export default async function FriendRequests(req, res) {
       [currentUser]
     );
 
-    console.log(result);
 
-    console.log(result.rows);
-
-    return res.status(200).json({ requester: result.rows});
+    return res.status(200).json({ requester: result.rows[0].requester_name });
   } catch (error) {
     return res.status(500).json({ message: "Error while browsing friend requests" });
   }
