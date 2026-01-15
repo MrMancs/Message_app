@@ -112,11 +112,12 @@ export default function Chat({ setToastData }) {
             width: "100%",
             padding: "20px",
             display: "flex",
+            flexDirection: "column",
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <h1 style={{ fontSize: "22px" }}>
+          <h1 style={{ fontSize: "22px", marginBottom: "20px" }}>
             Your chats,
             <span style={{ color: "gray" }}> {currentUser?.username}</span>
           </h1>
@@ -163,8 +164,12 @@ export default function Chat({ setToastData }) {
 
           {friendRequests && <>
             {friendRequestUsers.map((username, index) => (
-              <div key={index} style={{color: 'red', fontSize: '12px'}}>
+              <div key={index} style={{marginTop: "10px", padding: "5px", backgroundColor: "white", borderRadius: "10px", display: "flex", flexDirection: "column"}}>
                 Friend request from: {username}
+                <div style={{display: "flex", justifyContent: "space-around", marginTop: "5px"}}>
+                  <Button variant="outlined" style={{backgroundColor: "red", height: "16px", width: "16px"}}>X</Button>
+                  <Button variant="outlined" style={{backgroundColor: "green", height: "16px", width: "16px"}}>✓</Button>
+                </div>
               </div>
             ))}
           </>}
