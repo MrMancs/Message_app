@@ -14,6 +14,7 @@ export default function Chat({ setToastData }) {
   const [isMobileView, setIsMobileView] = useState(false);
   const [friendRequests, setFriendRequests] = useState(false);
   const [friendRequestUsers, setFriendRequestUsers] = useState([]);
+  const [friends, setFriends] = useState([]);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -281,6 +282,10 @@ export default function Chat({ setToastData }) {
               ))}
             </div>
           )}
+
+          <div>
+            <h1>TEST</h1>
+          </div>
         </div>
       </div>
 
