@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-export default function Chat( {setToastData} ) {
+export default function Chat({ setToastData }) {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -42,7 +42,7 @@ export default function Chat( {setToastData} ) {
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
 
-      if(responseJSON.status === 200){
+      if (responseJSON.status === 200) {
         setToastData({
           open: true,
           message: "Friend request sent!",
@@ -55,7 +55,7 @@ export default function Chat( {setToastData} ) {
           severity: "error",
         });
       }
-    })
+    });
   };
 
   useEffect(() => {
@@ -68,14 +68,14 @@ export default function Chat( {setToastData} ) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         currentUser: currentUser.username,
-      }).then(async (responseJSON) => {
-        const response = await responseJSON.json();
-        if(response.requester.length > 0){
-          console.log("van friend request");
-        } else {
-          console.log("nincs friend request");
-        }
-      })
+      }),
+    }).then(async (responseJSON) => {
+      const response = await responseJSON.json();
+      if (response.requester.length > 0) {
+        console.log("van friend request");
+      } else {
+        console.log("nincs friend request");
+      }
     });
 
     checkMobile();
