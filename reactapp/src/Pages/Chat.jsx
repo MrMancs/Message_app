@@ -105,6 +105,7 @@ export default function Chat({ setToastData }) {
         setFriends((prev) => [...prev, response.message]);
       }
       console.log(friends)
+      
     });
   };
 
