@@ -9,7 +9,7 @@ export default function Chat() {
 
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
-  const [showTestMessage, setShowTestMessage] = useState(false);
+  const [showOtherUsers, setshowOtherUsers] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
 
@@ -77,7 +77,7 @@ export default function Chat() {
               <Button
                 variant="outlined"
                 onClick={() => {
-                  setShowTestMessage(true);
+                  setshowOtherUsers(true);
                   handleSearch("");
                 }}
                 style={{
@@ -114,7 +114,7 @@ export default function Chat() {
         </div>
       </div>
 
-      {!isMobileView && showTestMessage && (
+      {!isMobileView && showOtherUsers && (
         <div
           style={{
             flex: 1,
@@ -160,7 +160,7 @@ export default function Chat() {
                   marginRight: "10px",
                   marginBottom: "10px",
                 }}
-                onClick={() => setShowTestMessage(false)}
+                onClick={() => setshowOtherUsers(false)}
                 variant="outlined"
               >
                 X
@@ -220,7 +220,7 @@ export default function Chat() {
             variant="outlined"
             style={{ marginBottom: "10px", color: "gray", borderColor: "gray" }}
             onClick={() => {
-              setShowTestMessage(true);
+              setshowOtherUsers(true);
               setIsMobileMenuOpen(false);
 
               handleSearch("");
@@ -254,7 +254,7 @@ export default function Chat() {
         </div>
       )}
 
-      {isMobileView && showTestMessage && (
+      {isMobileView && showOtherUsers && (
         <div
           style={{
             position: "fixed",
@@ -289,7 +289,7 @@ export default function Chat() {
                 marginRight: "10px",
                 marginBottom: "10px",
               }}
-              onClick={() => setShowTestMessage(false)}
+              onClick={() => setshowOtherUsers(false)}
               variant="outlined"
             >
               X
