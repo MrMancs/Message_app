@@ -8,6 +8,8 @@ export default async function Friends(req, res) {
   try {
     const { requesterName, receiverName } = req.body;
 
+    console.log(requesterName, receiverName);
+
     const result = await pool.query(
       "SELECT * FROM friendships WHERE receiver_name = $1 AND requester_name = $2 AND status = 'accepted'",
       [receiverName, requesterName]
@@ -16,7 +18,7 @@ export default async function Friends(req, res) {
     console.log(result)
 
     return res.status(200).json({ friends: result.rows });
-  } catch (error) {
+  } catch (error) { 
     return res.status(500).json({ message: "Error while fetching friends" });
   }
 }
