@@ -103,8 +103,8 @@ export default function Chat({ setToastData }) {
           severity: "success",
         });
         setFriends(response.message)
-        console.log(friends)
       }
+      console.log(friends)
     });
   };
 
