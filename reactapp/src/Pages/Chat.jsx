@@ -117,20 +117,17 @@ export default function Chat({ setToastData }) {
       body: JSON.stringify({
         requesterName,
         receiverName: currentUser.username,
-      })
+      }),
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
       console.log(response);
-
       if (response.status === 200) {
-        console.log(response.friends)
-        console.log("friends frissítve")
-        setFriends(prev => [...prev, response.friends]);
-        console.log(friends)
+        setFriends((prev) => [...prev, response.friends]);
       }
-      
-    })
-  }
+      console.log("friends frissítve");
+      console.log(friends);
+    });
+  };
 
   useEffect(() => {
     const checkMobile = () => {
