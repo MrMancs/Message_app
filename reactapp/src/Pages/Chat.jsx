@@ -44,7 +44,7 @@ export default function Chat({ setToastData }) {
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
 
-      if (responseJSON.status === 200) {
+      if (response.status === 200) {
         setToastData({
           open: true,
           message: "Friend request sent!",
@@ -72,7 +72,7 @@ export default function Chat({ setToastData }) {
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
 
-      if (responseJSON.status === 200) {
+      if (response.status === 200) {
         setToastData({
           open: true,
           message: "Friend request denied",
@@ -94,7 +94,7 @@ export default function Chat({ setToastData }) {
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
 
-      if (responseJSON.status === 200) {
+      if (response.status === 200) {
         setToastData({
           open: true,
           message: "Friend request accepted",
@@ -123,7 +123,8 @@ export default function Chat({ setToastData }) {
       console.log(response);
 
       if (response.status === 200) {
-        setFriends(response.friends);
+        setFriends(prev => [...prev, response.friends]);
+        console.log(friends)
       }
       
     })
