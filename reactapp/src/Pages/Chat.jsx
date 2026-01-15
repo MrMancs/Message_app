@@ -100,6 +100,7 @@ export default function Chat({ setToastData }) {
           message: "Friend request accepted",
           severity: "success",
         });
+        setFriends(response)
       }
     });
   };

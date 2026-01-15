@@ -20,7 +20,7 @@ export default async function acceptFriendRequest(req, res) {
 
     console.log(result)
 
-    return res.status(200).json({ message: result.rows });
+    return res.status(200).json({ message: result.rows[0].requester_name });
   } catch (error) {
     return res
       .status(500)
