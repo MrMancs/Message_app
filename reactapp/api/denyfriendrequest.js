@@ -9,7 +9,7 @@ export default async function acceptFriendRequest(req, res) {
     const { status, receiverName } = req.body;
 
     const result = await pool.query(
-      "ALTER TABLE friendships SET status = $1 WHERE receiver_name = $2 AND status = 'pending'",
+      "UPDATE friendships SET status = $1 WHERE receiver_name = $2 AND status = 'pending'",
       [status, receiverName]
     );
 
