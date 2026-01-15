@@ -12,7 +12,7 @@ export default function Chat( {setToastData} ) {
   const [showOtherUsers, setshowOtherUsers] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  const [friendRequests, setFriendRequests] = useState(false);
+  //const [friendRequests, setFriendRequests] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -71,9 +71,9 @@ export default function Chat( {setToastData} ) {
       }).then(async (responseJSON) => {
         const response = await responseJSON.json();
         if(response.requester.length > 0){
-          setFriendRequests(true);
+          console.log("van friend request");
         } else {
-          setFriendRequests(false);
+          console.log("nincs friend request");
         }
       })
     });
@@ -154,12 +154,6 @@ export default function Chat( {setToastData} ) {
             >
               ☰
             </Button>
-          )}
-
-          {friendRequests && (
-            <div style={{ marginLeft: "10px", color: "red", fontSize: "24px" }}>
-              !
-            </div>
           )}
         </div>
       </div>
