@@ -122,8 +122,8 @@ export default function Chat({ setToastData }) {
       const response = await responseJSON.json();
       console.log(response);
 
-      if (responseJSON.status === 200) {
-        setFriends(requesterName);
+      if (response.status === 200) {
+        //setFriends();
       }
       
     })
