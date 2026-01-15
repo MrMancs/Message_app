@@ -13,7 +13,7 @@ export default async function Friends(req, res) {
       [receiverName, requesterName]
     );
 
-    return res.status(200).json({ friends: result.rows });
+    return res.status(200).json({ friends: result.rows[0].requester_name });
   } catch (error) { 
     return res.status(500).json({ message: "Error while fetching friends" });
   }
