@@ -13,6 +13,8 @@ export default async function acceptFriendRequest(req, res) {
       [status, receiverName]
     );
 
+    console.log(result);
+
     return res.status(200).json({ message: "Friend request accepted" });
   } catch (error) {
     return res.status(500).json({ message: "Error while accepting friend request" });
