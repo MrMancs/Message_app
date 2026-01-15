@@ -94,13 +94,16 @@ export default function Chat({ setToastData }) {
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
 
+      console.log("Ezt adta vissza a genyó: " + response);
+
       if (response.status === 200) {
         setToastData({
           open: true,
           message: "Friend request accepted",
           severity: "success",
         });
-        setFriends(response)
+        setFriends(response.message)
+        console.log(friends)
       }
     });
   };
