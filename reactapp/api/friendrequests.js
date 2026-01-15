@@ -13,7 +13,7 @@ export default async function FriendRequests(req, res) {
       [currentUser]
     );
 
-    console.log(result.rows);
+    console.log(result);
 
     console.log(result.rows.requester_name);
 
