@@ -12,7 +12,8 @@ export default function Chat({ setToastData }) {
   const [showOtherUsers, setshowOtherUsers] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  //const [friendRequests, setFriendRequests] = useState(false);
+  const [friendRequests, setFriendRequests] = useState(false);
+  const [friendRequestUsers, setFriendRequestUsers] = useState([]);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -74,8 +75,11 @@ export default function Chat({ setToastData }) {
       console.log(response);
       if (response.requester.length > 0) {
         console.log("van friend request");
+        setFriendRequests(true);
+        setFriendRequestUsers(response.requester);
       } else {
         console.log("nincs friend request");
+        setFriendRequests(false);
       }
     });
 
@@ -156,6 +160,14 @@ export default function Chat({ setToastData }) {
               ☰
             </Button>
           )}
+
+          {friendRequests && <>
+            {friendRequestUsers.map((username, index) => (
+              <div key={index} style={{color: 'red', fontSize: '12px'}}>
+                Friend request from: {username}
+              </div>
+            ))}
+          </>}
         </div>
       </div>
 
