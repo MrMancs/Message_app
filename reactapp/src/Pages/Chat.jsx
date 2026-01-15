@@ -94,7 +94,7 @@ export default function Chat({ setToastData }) {
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
 
-      console.log("Ezt adta vissza a genyó: " + response);
+      console.log("Ezt adta vissza a genyó: " + response.message);
 
       if (response.status === 200) {
         setToastData({
