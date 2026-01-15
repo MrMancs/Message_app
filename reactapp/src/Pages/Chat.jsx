@@ -123,6 +123,8 @@ export default function Chat({ setToastData }) {
       console.log(response);
 
       if (response.status === 200) {
+        console.log(response.friends)
+        console.log("friends frissítve")
         setFriends(prev => [...prev, response.friends]);
         console.log(friends)
       }
