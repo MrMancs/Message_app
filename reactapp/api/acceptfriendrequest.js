@@ -8,13 +8,22 @@ export default async function acceptFriendRequest(req, res) {
   try {
     const { status, receiverName, requesterName } = req.body;
 
-    const result = await pool.query(
+    await pool.query(
       "UPDATE friendships SET status = $1 WHERE receiver_name = $2 AND requester_name = $3 AND status = 'pending'",
       [status, receiverName, requesterName]
     );
 
-    return res.status(200).json({ message: "Friend request accepted" });
+    const result = await pool.query(
+      "SELECT * FROM friendships WHERE receiver_name = $1 AND requester_name = $2 AND status = 'accepted'",
+      [receiverName, requesterName]
+    );
+
+    console.log(result)
+
+    return res.status(200).json({ message: result.rows });
   } catch (error) {
-    return res.status(500).json({ message: "Error while accepting friend request" });
+    return res
+      .status(500)
+      .json({ message: "Error while accepting friend request" });
   }
 }

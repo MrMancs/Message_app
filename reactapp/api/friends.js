@@ -1,4 +1,4 @@
-import { Pool } from "@neondatabase/serverless";
+/*import { Pool } from "@neondatabase/serverless";
 
 export default async function Friends(req, res) {
   var pool = new Pool({
@@ -13,9 +13,9 @@ export default async function Friends(req, res) {
       [receiverName]
     );
 
-    return res.status(200).json({ acceptedFriends: result.rows });
+    return res.status(200).json({ acceptedFriends: result.rows[0] });
   } catch (error) { 
     console.log(error);
     return res.status(500).json({ error: error });
   }
-}
+}*/

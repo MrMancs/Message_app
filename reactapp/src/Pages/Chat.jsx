@@ -110,7 +110,7 @@ export default function Chat({ setToastData }) {
     );
   };
 
-  const fetchFriends = (requesterName) => {
+  /*const fetchFriends = (requesterName) => {
     fetch("/api/friends", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -134,7 +134,7 @@ export default function Chat({ setToastData }) {
       console.log("friends frissítve");
       console.log(friends);
     });
-  };
+  };*/
 
   useEffect(() => {
     const checkMobile = () => {
@@ -300,7 +300,7 @@ export default function Chat({ setToastData }) {
                         acceptFriendRequest(username);
                         deleteFriendRequest(username);
 
-                        fetchFriends(username);
+                        //fetchFriends(username);
                       }}
                     >
                       ✓
