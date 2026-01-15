@@ -71,11 +71,12 @@ export default function Chat({ setToastData }) {
       }),
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
-      if (response.requester.length > 0) {
+      console.log(response);
+      /*if (response.requester.length > 0) {
         console.log("van friend request");
       } else {
         console.log("nincs friend request");
-      }
+      }*/
     });
 
     checkMobile();
