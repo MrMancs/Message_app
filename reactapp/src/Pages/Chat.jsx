@@ -123,7 +123,7 @@ export default function Chat({ setToastData }) {
       console.log(response);
 
       if (response.status === 200) {
-        //setFriends();
+        setFriends(response.friends);
       }
       
     })
