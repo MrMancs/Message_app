@@ -1,6 +1,6 @@
 import { Pool } from "@neondatabase/serverless";
 
-export default async function acceptFriendRequest(req, res) {
+export default async function denyFriendRequest(req, res) {
   var pool = new Pool({
     connectionString: process.env.DATABASE_URL,
   });
