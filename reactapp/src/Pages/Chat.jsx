@@ -29,6 +29,19 @@ export default function Chat() {
     });
   };
 
+  const addUser = (username) => {
+    console.log("Küldő: " + currentUser.username);
+    console.log("Fogadó: " + username);
+    /*fetch("/api/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        requesterName: currentUser.username,
+        receiverName: username
+      }),
+    })*/
+  }
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobileView(window.innerWidth <= 768);
@@ -189,7 +202,13 @@ export default function Chat() {
                   }}
                 >
                   <span style={{ fontSize: "20px" }}>{user.username}</span>
-                  <Button variant="text" style={{ color: "gray" }}>
+                  <Button
+                    variant="text"
+                    style={{ color: "gray" }}
+                    onClick={() => {
+                      addUser(user.username);
+                    }}
+                  >
                     Add
                   </Button>
                 </div>
@@ -276,7 +295,11 @@ export default function Chat() {
             <TextField
               label="Search"
               variant="outlined"
-              style={{ width: "80%", marginBottom: "20px", marginRight: "10px" }}
+              style={{
+                width: "80%",
+                marginBottom: "20px",
+                marginRight: "10px",
+              }}
               onChange={(e) => handleSearch(e.target.value)}
             />
             <Button
