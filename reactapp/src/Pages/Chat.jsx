@@ -103,6 +103,12 @@ export default function Chat({ setToastData }) {
     });
   };
 
+  const deleteFriendRequest = (requesterName) => {
+    setFriendRequestUsers((prev) =>
+      prev.filter((name) => name !== requesterName)
+    );
+  };
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobileView(window.innerWidth <= 768);
@@ -207,7 +213,15 @@ export default function Chat({ setToastData }) {
           )}
 
           {friendRequests && (
-            <div style={{maxHeight: "300px", overflowY: "auto", overscrollBehavior: "none", marginTop: "20px", width: "100%"}}>
+            <div
+              style={{
+                maxHeight: "250px",
+                overflowY: "auto",
+                overscrollBehavior: "none",
+                marginTop: "20px",
+                width: "100%",
+              }}
+            >
               {friendRequestUsers.map((username, index) => (
                 <div
                   key={index}
@@ -242,6 +256,7 @@ export default function Chat({ setToastData }) {
                       }}
                       onClick={() => {
                         denyFriendRequest(username);
+                        deleteFriendRequest(username);
                       }}
                     >
                       X
@@ -256,6 +271,7 @@ export default function Chat({ setToastData }) {
                       }}
                       onClick={() => {
                         acceptFriendRequest(username);
+                        deleteFriendRequest(username);
                       }}
                     >
                       ✓
