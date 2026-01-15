@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-export default function Chat() {
+export default function Chat( {setToastData} ) {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -30,8 +30,6 @@ export default function Chat() {
   };
 
   const addFriend = (username) => {
-    console.log("Küldő: " + currentUser.username);
-    console.log("Fogadó: " + username);
     fetch("/api/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,6 +38,22 @@ export default function Chat() {
         receiverName: username,
         status: "pending",
       }),
+    }).then(async (responseJSON) => {
+      const response = await responseJSON.json();
+
+      if(responseJSON.status === 200){
+        setToastData({
+          open: true,
+          message: "Friend request sent!",
+          severity: "success",
+        });
+      } else {
+        setToastData({
+          open: true,
+          message: "Error while adding friend",
+          severity: "error",
+        });
+      }
     })
   };
 

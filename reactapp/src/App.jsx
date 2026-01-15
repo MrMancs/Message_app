@@ -22,7 +22,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login setToastData={setToastData} />} />
         <Route path="/register" element={<Register setToastData={setToastData} />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/chat" element={<Chat setToastData={setToastData}  />} />
       </Routes>
       {toastData.open && <MySnackbar toastData = {toastData} setToastData = {setToastData}/>}
     </>
