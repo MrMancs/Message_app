@@ -15,7 +15,7 @@ export default async function Friends(req, res) {
 
     console.log(result)
 
-    return res.status(200).json({ friends: "result" });
+    return res.status(200).json({ friends: result.rows });
   } catch (error) {
     return res.status(500).json({ message: "Error while fetching friends" });
   }
