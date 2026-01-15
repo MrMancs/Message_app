@@ -110,6 +110,25 @@ export default function Chat({ setToastData }) {
     );
   };
 
+  const fetchFriends = (requesterName) => {
+    fetch("/api/friends", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        requesterName,
+        receiverName: currentUser.username,
+      })
+    }).then(async (responseJSON) => {
+      const response = await responseJSON.json();
+      console.log(response);
+
+      if (responseJSON.status === 200) {
+        setFriends(requesterName);
+      }
+      
+    })
+  }
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobileView(window.innerWidth <= 768);
@@ -273,6 +292,8 @@ export default function Chat({ setToastData }) {
                       onClick={() => {
                         acceptFriendRequest(username);
                         deleteFriendRequest(username);
+
+                        fetchFriends(username);
                       }}
                     >
                       ✓
@@ -283,8 +304,35 @@ export default function Chat({ setToastData }) {
             </div>
           )}
 
-          <div>
-            <h1>TEST</h1>
+          <div
+            style={{
+              marginTop: "80px",
+              width: "100%",
+              maxHeight: "250px",
+              overflowY: "auto",
+              overscrollBehavior: "none",
+            }}
+          >
+            {friends.map((friend, index) => (
+              <div
+                key={index}
+                style={{
+                  height: "80px",
+                  borderTop: "1px solid rgba(0,0,0,0.3)",
+                  background:
+                    "linear-gradient(to right, rgba(255,0,0,0.2), rgba(255,165,0,0.2))",
+                  borderRadius: "8px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span>{friend}</span>
+                <Button variant="text" style={{ color: "gray" }}>
+                  Message
+                </Button>
+              </div>
+            ))}
           </div>
         </div>
       </div>
