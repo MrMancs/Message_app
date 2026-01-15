@@ -59,6 +59,48 @@ export default function Chat({ setToastData }) {
     });
   };
 
+  const denyFriendRequest = () => {
+    fetch("/api/denyfriendrequest", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        receiverName: currentUser.username,
+        status: "denied",
+      }),
+    }).then(async (responseJSON) => {
+      const response = await responseJSON.json();
+
+      if (responseJSON.status === 200) {
+        setToastData({
+          open: true,
+          message: "Friend request denied",
+          severity: "error",
+        });
+      }
+    });
+  };
+
+  const acceptFriendRequest = () => {
+    fetch("/api/acceptfriendrequest", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        receiverName: currentUser.username,
+        status: "accepted",
+      }),
+    }).then(async (responseJSON) => {
+      const response = await responseJSON.json();
+
+      if (responseJSON.status === 200) {
+        setToastData({
+          open: true,
+          message: "Friend request accepted",
+          severity: "success",
+        });
+      }
+    });
+  };
+
   useEffect(() => {
     const checkMobile = () => {
       setIsMobileView(window.innerWidth <= 768);
@@ -162,17 +204,65 @@ export default function Chat({ setToastData }) {
             </Button>
           )}
 
-          {friendRequests && <>
-            {friendRequestUsers.map((username, index) => (
-              <div key={index} style={{marginTop: "10px", padding: "5px", backgroundColor: "white", borderRadius: "10px", display: "flex", flexDirection: "column"}}>
-                <span className="mb-2.5">Friend request from: {username}</span>
-                <div style={{display: "flex", flexDirection: "row", justifyContent: "space-around", marginTop: "5px", marginBottom: "5px"}}>
-                  <Button variant="outlined" style={{backgroundColor: "red", height: "40px", color: "white", borderColor: "red"}}>X</Button>
-                  <Button variant="outlined" style={{backgroundColor: "green", height: "40px", color: "white", borderColor: "green"}}>✓</Button>
+          {friendRequests && (
+            <>
+              {friendRequestUsers.map((username, index) => (
+                <div
+                  key={index}
+                  style={{
+                    marginTop: "10px",
+                    padding: "5px",
+                    backgroundColor: "white",
+                    borderRadius: "10px",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <span className="mb-2.5">
+                    Friend request from: {username}
+                  </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                      marginTop: "5px",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    <Button
+                      variant="outlined"
+                      style={{
+                        backgroundColor: "red",
+                        height: "40px",
+                        color: "white",
+                        borderColor: "red",
+                      }}
+                      onClick={() => {
+                        denyFriendRequest();
+                      }}
+                    >
+                      X
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      style={{
+                        backgroundColor: "green",
+                        height: "40px",
+                        color: "white",
+                        borderColor: "green",
+                      }}
+                      onClick={() => {
+                        acceptFriendRequest();
+                      }}
+                    >
+                      ✓
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </>}
+              ))}
+            </>
+          )}
         </div>
       </div>
 
