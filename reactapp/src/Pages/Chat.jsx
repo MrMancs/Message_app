@@ -120,11 +120,15 @@ export default function Chat({ setToastData }) {
       }),
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
-      
+
       if (response.status === 200) {
-        setFriends(response.reqName);
-      } else {
-        console.log(response.error);
+        setFriends(
+          response.acceptedFriends.map((row) =>
+            row.requester_name === currentUser.username
+              ? row.receiver_name
+              : row.requester_name
+          )
+        );
       }
       console.log("friends frissítve");
       console.log(friends);
