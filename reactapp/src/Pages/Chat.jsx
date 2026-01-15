@@ -12,6 +12,7 @@ export default function Chat( {setToastData} ) {
   const [showOtherUsers, setshowOtherUsers] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
+  const [friendRequests, setFriendRequests] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -61,6 +62,21 @@ export default function Chat( {setToastData} ) {
     const checkMobile = () => {
       setIsMobileView(window.innerWidth <= 768);
     };
+
+    fetch("/api/friendrequests", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        currentUser: currentUser.username,
+      }).then(async (responseJSON) => {
+        const response = await responseJSON.json();
+        if(response.requester.length > 0){
+          setFriendRequests(true);
+        } else {
+          setFriendRequests(false);
+        }
+      })
+    });
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -138,6 +154,12 @@ export default function Chat( {setToastData} ) {
             >
               ☰
             </Button>
+          )}
+
+          {friendRequests && (
+            <div style={{ marginLeft: "10px", color: "red", fontSize: "24px" }}>
+              !
+            </div>
           )}
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { Pool } from "@neondatabase/serverless";
 
-export default async function Search(req, res) {
+export default async function Add(req, res) {
   var pool = new Pool({
     connectionString: process.env.DATABASE_URL,
   });
