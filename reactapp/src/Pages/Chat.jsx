@@ -59,11 +59,12 @@ export default function Chat({ setToastData }) {
     });
   };
 
-  const denyFriendRequest = () => {
+  const denyFriendRequest = (requesterName) => {
     fetch("/api/denyfriendrequest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        requesterName,
         receiverName: currentUser.username,
         status: "denied",
       }),
@@ -80,11 +81,12 @@ export default function Chat({ setToastData }) {
     });
   };
 
-  const acceptFriendRequest = () => {
+  const acceptFriendRequest = (requesterName) => {
     fetch("/api/acceptfriendrequest", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        requesterName,
         receiverName: currentUser.username,
         status: "accepted",
       }),
@@ -239,7 +241,7 @@ export default function Chat({ setToastData }) {
                         borderColor: "red",
                       }}
                       onClick={() => {
-                        denyFriendRequest();
+                        denyFriendRequest(username);
                       }}
                     >
                       X
@@ -253,7 +255,7 @@ export default function Chat({ setToastData }) {
                         borderColor: "green",
                       }}
                       onClick={() => {
-                        acceptFriendRequest();
+                        acceptFriendRequest(username);
                       }}
                     >
                       ✓

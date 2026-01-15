@@ -6,11 +6,11 @@ export default async function acceptFriendRequest(req, res) {
   });
 
   try {
-    const { status, receiverName } = req.body;
+    const { status, receiverName, requesterName } = req.body;
 
     const result = await pool.query(
-      "UPDATE friendships SET status = $1 WHERE receiver_name = $2 AND status = 'pending'",
-      [status, receiverName]
+      "UPDATE friendships SET status = $1 WHERE receiver_name = $2 AND requester_name = $3 AND status = 'pending'",
+      [status, receiverName, requesterName]
     );
 
     return res.status(200).json({ message: "Friend request accepted" });
