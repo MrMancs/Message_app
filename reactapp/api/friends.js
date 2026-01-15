@@ -9,7 +9,7 @@ export default async function Friends(req, res) {
     const { receiverName } = req.body;
 
     const result = await pool.query(
-      "SELECT * FROM friendships WHERE (receiver_name = $1 OR requester_name = $1) AND status = 'accepted'",
+      "SELECT * FROM friendships WHERE (receiver_name = $1 OR requester_name = $1) AND status = 'pending'",
       [receiverName]
     );
 
