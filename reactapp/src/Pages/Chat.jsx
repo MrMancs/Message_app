@@ -120,9 +120,9 @@ export default function Chat({ setToastData }) {
       }),
     }).then(async (responseJSON) => {
       const response = await responseJSON.json();
-      console.log(response);
+      
       if (response.status === 200) {
-        setFriends((prev) => [...prev, response.friends]);
+        setFriends(response.friends);
       }
       console.log("friends frissítve");
       console.log(friends);
