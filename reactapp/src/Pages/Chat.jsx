@@ -207,7 +207,7 @@ export default function Chat({ setToastData }) {
           )}
 
           {friendRequests && (
-            <>
+            <div style={{maxHeight: "300px", overflowY: "auto", overscrollBehavior: "none", marginTop: "20px", width: "100%"}}>
               {friendRequestUsers.map((username, index) => (
                 <div
                   key={index}
@@ -263,7 +263,7 @@ export default function Chat({ setToastData }) {
                   </div>
                 </div>
               ))}
-            </>
+            </div>
           )}
         </div>
       </div>
