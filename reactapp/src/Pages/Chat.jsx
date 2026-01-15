@@ -29,18 +29,19 @@ export default function Chat() {
     });
   };
 
-  const addUser = (username) => {
+  const addFriend = (username) => {
     console.log("Küldő: " + currentUser.username);
     console.log("Fogadó: " + username);
-    /*fetch("/api/add", {
+    fetch("/api/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         requesterName: currentUser.username,
-        receiverName: username
+        receiverName: username,
+        status: "pending",
       }),
-    })*/
-  }
+    })
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -206,7 +207,7 @@ export default function Chat() {
                     variant="text"
                     style={{ color: "gray" }}
                     onClick={() => {
-                      addUser(user.username);
+                      addFriend(user.username);
                     }}
                   >
                     Add
@@ -341,7 +342,13 @@ export default function Chat() {
                 }}
               >
                 <span style={{ fontSize: "20px" }}>{user.username}</span>
-                <Button variant="text" style={{ color: "gray" }}>
+                <Button
+                  variant="text"
+                  style={{ color: "gray" }}
+                  onClick={() => {
+                    addFriend(user.username);
+                  }}
+                >
                   Add
                 </Button>
               </div>
