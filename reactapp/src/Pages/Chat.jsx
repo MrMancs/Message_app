@@ -370,6 +370,7 @@ export default function Chat({ setToastData }) {
         </div>
       </div>
 
+      {/* Gépes üzenetek */}
       {messageWindows && !isMobileView && (
         <div
           style={{
@@ -408,7 +409,24 @@ export default function Chat({ setToastData }) {
               borderRadius: "10px",
               border: "1px solid lightgrey",
             }}
-          ></div>
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "90%",
+                marginBottom: "10px",
+              }}
+            >
+              <TextField label="Enter your message"></TextField>
+              <Button
+                variant="outlined"
+                style={{ color: "gray", borderColor: "gray" }}
+              >
+                Send
+              </Button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -572,6 +590,7 @@ export default function Chat({ setToastData }) {
         </div>
       )}
 
+      {/* Mobilos üzenetek */}
       {isMobileView && messageWindows && (
         <div
           style={{
@@ -582,6 +601,7 @@ export default function Chat({ setToastData }) {
             flexDirection: "column",
             zIndex: 3000,
             fontSize: "24px",
+            alignItems: "center",
           }}
         >
           <Button
@@ -607,7 +627,24 @@ export default function Chat({ setToastData }) {
               borderRadius: "10px",
               border: "1px solid lightgrey",
             }}
-          ></div>
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "90%",
+                marginBottom: "10px",
+              }}
+            >
+              <TextField label="Enter your message"></TextField>
+              <Button
+                variant="outlined"
+                style={{ color: "gray", borderColor: "gray" }}
+              >
+                Send
+              </Button>
+            </div>
+          </div>
         </div>
       )}
 
