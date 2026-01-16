@@ -368,13 +368,19 @@ export default function Chat({ setToastData }) {
             ))}
           </div>
         </div>
-
-        {messageWindows && (
-          <div style={{ height: "100%", backgroundColor: "white" }}>
-            <Button onClick={() => setMessageWindows(false)} variant="outlined" style={{color: "gray", borderColor: "gray"}}>X</Button>
-          </div>
-        )}
       </div>
+
+      {messageWindows && (
+        <div style={{ height: "100%", backgroundColor: "white" }}>
+          <Button
+            onClick={() => setMessageWindows(false)}
+            variant="outlined"
+            style={{ color: "gray", borderColor: "gray" }}
+          >
+            X
+          </Button>
+        </div>
+      )}
 
       {!isMobileView && showOtherUsers && (
         <div
