@@ -155,9 +155,21 @@ export default function Chat({ setToastData }) {
         sender: currentUser.username,
         receiver: selectedFriend,
         message: message,
+        sentAt: new Date().toISOString(),
       }),
     });
   };
+
+  const fetchMessages = (selectedFriend) => {
+    fetch("/api/fetchmessages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sender: currentUser.username,
+        receiver: selectedFriend,
+      }),
+    })
+  }
 
   useEffect(() => {
     const checkMobile = () => {
@@ -448,6 +460,8 @@ export default function Chat({ setToastData }) {
                 style={{ color: "gray", borderColor: "gray" }}
                 onClick={() => {
                   sendMessage(selectedFriendToMessage, thisMessageWillBeSent);
+
+                  setThisMessageWillBeSent("");
                 }}
               >
                 Send
