@@ -414,7 +414,7 @@ export default function Chat({ setToastData }) {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                width: "90%",
+                justifyContent: "space-around",
                 marginBottom: "10px",
               }}
             >
@@ -634,6 +634,7 @@ export default function Chat({ setToastData }) {
                 flexDirection: "row",
                 width: "90%",
                 marginBottom: "10px",
+                justifyContent: "space-around",
               }}
             >
               <TextField label="Enter your message"></TextField>
