@@ -370,7 +370,7 @@ export default function Chat({ setToastData }) {
         </div>
       </div>
 
-      {messageWindows && (
+      {messageWindows && !isMobileView && (
         <div
           style={{
             height: "100%",
@@ -575,16 +575,13 @@ export default function Chat({ setToastData }) {
       {isMobileView && messageWindows && (
         <div
           style={{
-            height: "100%",
+            position: "fixed",
+            inset: 0,
             backgroundColor: "white",
-            marginLeft: "20px",
-            marginRight: "20px",
-            maxWidth: "350px",
-            minWidth: "200px",
-            width: "100%",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            zIndex: 3000,
+            fontSize: "24px",
           }}
         >
           <Button
