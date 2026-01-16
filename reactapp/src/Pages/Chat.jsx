@@ -17,6 +17,7 @@ export default function Chat({ setToastData }) {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [messageWindows, setMessageWindows] = useState(false);
   const [selectedFriendToMessage, setSelectedFriendToMessage] = useState("");
+  const [thisMessageWillBeSent, setThisMessageWillBeSent] = useState("");
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -146,14 +147,14 @@ export default function Chat({ setToastData }) {
 
   const isPending = (username) => pendingRequests.includes(username);
 
-  const sendMessage = () => {
+  const sendMessage = (selectedFriend, message) => {
     fetch("/api/sendmessage", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         sender: currentUser.username,
-        receiver: "",
-        message: "",
+        receiver: selectedFriend,
+        message: message,
       }),
     });
   };
@@ -397,7 +398,7 @@ export default function Chat({ setToastData }) {
             alignItems: "center",
           }}
         >
-          <div>
+          <div style={{width: "90%", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
             <span style={{marginLeft: "10px", marginTop: "10px"}}>{selectedFriendToMessage}</span>
             <Button
               onClick={() => setMessageWindows(false)}
@@ -439,12 +440,14 @@ export default function Chat({ setToastData }) {
                 marginTop: "auto",
               }}
             >
-              <TextField label="Enter your message" size="small" fullWidth />
+              <TextField label="Enter your message" size="small" fullWidth onChange={(e) => {
+                setThisMessageWillBeSent(e.target.value)
+              }} />
               <Button
                 variant="outlined"
                 style={{ color: "gray", borderColor: "gray" }}
                 onClick={() => {
-                  sendMessage();
+                  sendMessage(selectedFriendToMessage, thisMessageWillBeSent);
                 }}
               >
                 Send
