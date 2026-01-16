@@ -16,6 +16,7 @@ export default function Chat({ setToastData }) {
   const [friends, setFriends] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [messageWindows, setMessageWindows] = useState(false);
+  const [selectedFriendToMessage, setSelectedFriendToMessage] = useState("");
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -145,7 +146,17 @@ export default function Chat({ setToastData }) {
 
   const isPending = (username) => pendingRequests.includes(username);
 
-  const showMessageWindow = (friendUsername) => {};
+  const sendMessage = () => {
+    fetch("/api/sendmessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sender: currentUser.username,
+        receiver: "",
+        message: "",
+      }),
+    });
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -346,7 +357,6 @@ export default function Chat({ setToastData }) {
                 key={index}
                 style={{
                   height: "80px",
-                  borderTop: "1px solid rgba(0,0,0,0.3)",
                   background:
                     "linear-gradient(to right, rgba(255,0,0,0.2), rgba(255,165,0,0.2))",
                   display: "flex",
@@ -360,6 +370,7 @@ export default function Chat({ setToastData }) {
                   style={{ color: "gray" }}
                   onClick={() => {
                     setMessageWindows(true);
+                    setSelectedFriendToMessage(friend);
                   }}
                 >
                   Message
@@ -386,20 +397,24 @@ export default function Chat({ setToastData }) {
             alignItems: "center",
           }}
         >
-          <Button
-            onClick={() => setMessageWindows(false)}
-            variant="outlined"
-            style={{
-              color: "gray",
-              borderColor: "gray",
-              marginTop: "10px",
-              marginRight: "10px",
-              width: "30px",
-              alignSelf: "flex-end",
-            }}
-          >
-            X
-          </Button>
+          <div>
+            <span style={{marginLeft: "10px", marginTop: "10px"}}>{selectedFriendToMessage}</span>
+            <Button
+              onClick={() => setMessageWindows(false)}
+              variant="outlined"
+              style={{
+                color: "gray",
+                borderColor: "gray",
+                marginTop: "10px",
+                marginRight: "10px",
+                width: "30px",
+                alignSelf: "flex-end",
+              }}
+            >
+              X
+            </Button>
+          </div>
+
           <div
             style={{
               marginTop: "20px",
@@ -413,7 +428,9 @@ export default function Chat({ setToastData }) {
               padding: "10px",
             }}
           >
-            <div style={{ flex: 1, overflowY: "auto" }}>{/* messages */}</div>
+            <div
+              style={{ flex: 1, overflowY: "auto", marginBottom: "15px" }}
+            ></div>
 
             <div
               style={{
@@ -426,6 +443,9 @@ export default function Chat({ setToastData }) {
               <Button
                 variant="outlined"
                 style={{ color: "gray", borderColor: "gray" }}
+                onClick={() => {
+                  sendMessage();
+                }}
               >
                 Send
               </Button>
@@ -626,13 +646,14 @@ export default function Chat({ setToastData }) {
             style={{
               marginTop: "20px",
               backgroundColor: "lightgray",
-              height: "100%", 
+              height: "100%",
               width: "90%",
               borderRadius: "10px",
               border: "1px solid lightgrey",
-              display: "flex", 
-              flexDirection: "column", 
+              display: "flex",
+              flexDirection: "column",
               padding: "10px",
+              marginBottom: "10px",
             }}
           >
             <div style={{ flex: 1, overflowY: "auto" }}>{/* messages */}</div>
