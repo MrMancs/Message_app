@@ -147,7 +147,7 @@ export default function Chat({ setToastData }) {
 
   const isPending = (username) => pendingRequests.includes(username);
 
-  const sendMessage = (selectedFriend, message) => {
+  const sendMessage = (selectedFriend, message, sentAt) => {
     fetch("/api/sendmessage", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -155,7 +155,7 @@ export default function Chat({ setToastData }) {
         sender: currentUser.username,
         receiver: selectedFriend,
         message: message,
-        sentAt: new Date(),
+        sentAt
       }),
     });
   };
@@ -168,8 +168,8 @@ export default function Chat({ setToastData }) {
         sender: currentUser.username,
         receiver: selectedFriend,
       }),
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -410,8 +410,17 @@ export default function Chat({ setToastData }) {
             alignItems: "center",
           }}
         >
-          <div style={{width: "90%", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-            <span style={{marginLeft: "10px", marginTop: "10px"}}>{selectedFriendToMessage}</span>
+          <div
+            style={{
+              width: "90%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <span style={{ marginLeft: "10px", marginTop: "10px" }}>
+              {selectedFriendToMessage}
+            </span>
             <Button
               onClick={() => setMessageWindows(false)}
               variant="outlined"
@@ -452,14 +461,35 @@ export default function Chat({ setToastData }) {
                 marginTop: "auto",
               }}
             >
-              <TextField label="Enter your message" size="small" fullWidth onChange={(e) => {
-                setThisMessageWillBeSent(e.target.value)
-              }} />
+              <TextField
+                label="Enter your message"
+                size="small"
+                fullWidth
+                onChange={(e) => {
+                  setThisMessageWillBeSent(e.target.value);
+                }}
+              />
               <Button
                 variant="outlined"
                 style={{ color: "gray", borderColor: "gray" }}
                 onClick={() => {
-                  sendMessage(selectedFriendToMessage, thisMessageWillBeSent);
+                  let thisTime = new Date();
+
+                  let year = thisTime.getFullYear();
+                  let month = String(thisTime.getMonth() + 1).padStart(2, "0");
+                  let day = String(thisTime.getDate()).padStart(2, "0");
+
+                  let hours = String(thisTime.getHours()).padStart(2, "0");
+                  let minutes = String(thisTime.getMinutes()).padStart(2, "0");
+                  let seconds = String(thisTime.getSeconds()).padStart(2, "0");
+
+                  let formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+                  sendMessage(
+                    selectedFriendToMessage,
+                    thisMessageWillBeSent,
+                    formattedTime
+                  );
 
                   setThisMessageWillBeSent("");
                 }}
