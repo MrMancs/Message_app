@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 export default function Chat({ setToastData }) {
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [showOtherUsers, setshowOtherUsers] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -17,6 +16,8 @@ export default function Chat({ setToastData }) {
   const [friends, setFriends] = useState([]);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
+
+  /* ================= SEARCH ================= */
 
   const handleSearch = (value) => {
     fetch("/api/search", {
@@ -32,6 +33,36 @@ export default function Chat({ setToastData }) {
     });
   };
 
+  /* ================= FRIENDS ================= */
+
+  const fetchFriends = () => {
+    fetch("/api/friends", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        requesterName: currentUser.username,
+        receiverName: currentUser.username,
+      }),
+    }).then(async (res) => {
+      const data = await res.json();
+
+      if (!Array.isArray(data.acceptedFriends)) {
+        setFriends([]);
+        return;
+      }
+
+      const acceptedFriends = data.acceptedFriends.map((row) =>
+        row.requester_name === currentUser.username
+          ? row.receiver_name
+          : row.requester_name
+      );
+
+      setFriends(acceptedFriends);
+    });
+  };
+
+  /* ================= FRIEND REQUESTS ================= */
+
   const addFriend = (username) => {
     fetch("/api/add", {
       method: "POST",
@@ -41,22 +72,17 @@ export default function Chat({ setToastData }) {
         receiverName: username,
         status: "pending",
       }),
-    }).then(async (responseJSON) => {
-      const response = await responseJSON.json();
+    }).then(async (res) => {
+      const data = await res.json();
 
-      if (response.status === 200) {
-        setToastData({
-          open: true,
-          message: "Friend request sent!",
-          severity: "success",
-        });
-      } else {
-        setToastData({
-          open: true,
-          message: "Error while adding friend",
-          severity: "error",
-        });
-      }
+      setToastData({
+        open: true,
+        message:
+          data.status === 200
+            ? "Friend request sent!"
+            : "Error while adding friend",
+        severity: data.status === 200 ? "success" : "error",
+      });
     });
   };
 
@@ -69,16 +95,8 @@ export default function Chat({ setToastData }) {
         receiverName: currentUser.username,
         status: "denied",
       }),
-    }).then(async (responseJSON) => {
-      const response = await responseJSON.json();
-
-      if (response.status === 200) {
-        setToastData({
-          open: true,
-          message: "Friend request denied",
-          severity: "error",
-        });
-      }
+    }).then(() => {
+      deleteFriendRequest(requesterName);
     });
   };
 
@@ -91,55 +109,31 @@ export default function Chat({ setToastData }) {
         receiverName: currentUser.username,
         status: "accepted",
       }),
-    }).then(async (responseJSON) => {
-      const response = await responseJSON.json();
+    }).then(async (res) => {
+      const data = await res.json();
 
-      console.log("Ezt adta vissza a genyó: " + response.message);
-
-      if (response.status === 200) {
+      if (data.status === 200) {
         setToastData({
           open: true,
           message: "Friend request accepted",
           severity: "success",
         });
-        setFriends((prev) => [...prev, response.message]);
+
+        deleteFriendRequest(requesterName);
+        fetchFriends();
       }
-      console.log(friends)
-      
     });
   };
 
   const deleteFriendRequest = (requesterName) => {
-    setFriendRequestUsers((prev) =>
-      prev.filter((name) => name !== requesterName)
-    );
+    setFriendRequestUsers((prev) => {
+      const updated = prev.filter((name) => name !== requesterName);
+      setFriendRequests(updated.length > 0);
+      return updated;
+    });
   };
 
-  /*const fetchFriends = (requesterName) => {
-    fetch("/api/friends", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        requesterName,
-        receiverName: currentUser.username,
-      }),
-    }).then(async (responseJSON) => {
-      const response = await responseJSON.json();
-
-      console.log(response);
-      if (response.status === 200) {
-        setFriends(
-          response.acceptedFriends.map((row) =>
-            row.requester_name === currentUser.username
-              ? row.receiver_name
-              : row.requester_name
-          )
-        );
-      }
-      console.log("friends frissítve");
-      console.log(friends);
-    });
-  };*/
+  /* ================= INIT ================= */
 
   useEffect(() => {
     const checkMobile = () => {
@@ -152,18 +146,13 @@ export default function Chat({ setToastData }) {
       body: JSON.stringify({
         currentUser: currentUser.username,
       }),
-    }).then(async (responseJSON) => {
-      const response = await responseJSON.json();
-      console.log(response);
-      if (response.requester.length > 0) {
-        //console.log("van friend request");
-        setFriendRequests(true);
-        setFriendRequestUsers(response.requester);
-      } else {
-        //console.log("nincs friend request");
-        setFriendRequests(false);
-      }
+    }).then(async (res) => {
+      const data = await res.json();
+      setFriendRequests(data.requester.length > 0);
+      setFriendRequestUsers(data.requester || []);
     });
+
+    fetchFriends();
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -305,7 +294,7 @@ export default function Chat({ setToastData }) {
                         acceptFriendRequest(username);
                         deleteFriendRequest(username);
 
-                        //fetchFriends(username);
+                        fetchFriends(currentUser.username);
                       }}
                     >
                       ✓
@@ -333,13 +322,12 @@ export default function Chat({ setToastData }) {
                   borderTop: "1px solid rgba(0,0,0,0.3)",
                   background:
                     "linear-gradient(to right, rgba(255,0,0,0.2), rgba(255,165,0,0.2))",
-                  borderRadius: "8px",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                 }}
               >
-                <span>{friend}</span>
+                <span style={{ marginLeft: "10px" }}>{friend}</span>
                 <Button variant="text" style={{ color: "gray" }}>
                   Message
                 </Button>
