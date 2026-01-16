@@ -15,6 +15,7 @@ export default function Chat({ setToastData }) {
   const [friendRequestUsers, setFriendRequestUsers] = useState([]);
   const [friends, setFriends] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
+  const [messageWindows, setMessageWindows] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -143,6 +144,8 @@ export default function Chat({ setToastData }) {
   const isFriend = (username) => friends.includes(username);
 
   const isPending = (username) => pendingRequests.includes(username);
+
+  const showMessageWindow = (friendUsername) => {};
 
   useEffect(() => {
     const checkMobile = () => {
@@ -352,13 +355,25 @@ export default function Chat({ setToastData }) {
                 }}
               >
                 <span style={{ marginLeft: "10px" }}>{friend}</span>
-                <Button variant="text" style={{ color: "gray" }}>
+                <Button
+                  variant="text"
+                  style={{ color: "gray" }}
+                  onClick={() => {
+                    setMessageWindows(true);
+                  }}
+                >
                   Message
                 </Button>
               </div>
             ))}
           </div>
         </div>
+
+        {messageWindows && (
+          <div style={{ height: "100%", backgroundColor: "white" }}>
+            <Button onClick={() => setMessageWindows(false)} variant="outlined" style={{color: "gray", borderColor: "gray"}}>X</Button>
+          </div>
+        )}
       </div>
 
       {!isMobileView && showOtherUsers && (
@@ -437,7 +452,13 @@ export default function Chat({ setToastData }) {
                 >
                   <span style={{ fontSize: "20px" }}>{user.username}</span>
                   {isFriend(user.username) ? (
-                    <Button variant="text" style={{ color: "gray" }}>
+                    <Button
+                      variant="text"
+                      style={{ color: "gray" }}
+                      onClick={() => {
+                        setMessageWindows(true);
+                      }}
+                    >
                       Message
                     </Button>
                   ) : isPending(user.username) ? (
