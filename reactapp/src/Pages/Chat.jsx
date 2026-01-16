@@ -18,6 +18,7 @@ export default function Chat({ setToastData }) {
   const [messageWindows, setMessageWindows] = useState(false);
   const [selectedFriendToMessage, setSelectedFriendToMessage] = useState("");
   const [thisMessageWillBeSent, setThisMessageWillBeSent] = useState("");
+  const [getAllMessages, setGetAllMessages] = useState([]);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -155,20 +156,38 @@ export default function Chat({ setToastData }) {
         sender: currentUser.username,
         receiver: selectedFriend,
         message: message,
-        sentAt
+        sentAt,
       }),
     });
   };
 
-  const fetchMessages = (selectedFriend) => {
-    fetch("/api/fetchmessages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sender: currentUser.username,
-        receiver: selectedFriend,
-      }),
-    });
+  const fetchMessages = async (friend) => {
+    if (!friend) return;
+
+    try {
+      const res = await fetch("/api/fetchmessages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sender: currentUser.username,
+          receiver: friend,
+        }),
+      });
+      const data = await res.json();
+
+      if (Array.isArray(data.messages)) {
+        // Az összes üzenet objektumként kerül a state-be
+        const formattedMessages = data.messages.map((msg) => ({
+          message: msg.message,
+          sender: msg.sender,
+          sentAt: msg.created_at,
+        }));
+
+        setGetAllMessages(formattedMessages);
+      }
+    } catch (err) {
+      console.error("Error fetching messages:", err);
+    }
   };
 
   useEffect(() => {
@@ -205,10 +224,12 @@ export default function Chat({ setToastData }) {
 
     fetchPendingRequests();
 
+    console.log(getAllMessages);
+
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  }, [getAllMessages]);
 
   return (
     <div
@@ -384,6 +405,8 @@ export default function Chat({ setToastData }) {
                   onClick={() => {
                     setMessageWindows(true);
                     setSelectedFriendToMessage(friend);
+
+                    fetchMessages(friend);
                   }}
                 >
                   Message
@@ -451,8 +474,39 @@ export default function Chat({ setToastData }) {
             }}
           >
             <div
-              style={{ flex: 1, overflowY: "auto", marginBottom: "15px" }}
-            ></div>
+              style={{
+                flex: 1,
+                overflowY: "auto",
+                marginBottom: "15px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              {getAllMessages.map((msg, index) => (
+                <div
+                  key={index}
+                  style={{
+                    alignSelf:
+                      msg.sender === currentUser.username
+                        ? "flex-end"
+                        : "flex-start",
+                    backgroundColor:
+                      msg.sender === currentUser.username
+                        ? "lightgreen"
+                        : "lightblue",
+                    maxWidth: "150px",
+                    textAlign: "center",
+                    padding: "10px",
+                    marginBottom: "10px",
+                    border: msg.sender === currentUser.username ? "1px solid lightgreen" : "1px solid lightblue",
+                    borderRadius: "50px",
+                  }}
+                >
+                  <span>{msg.message}</span>
+                </div>
+              ))}
+            </div>
 
             <div
               style={{
@@ -472,24 +526,27 @@ export default function Chat({ setToastData }) {
               <Button
                 variant="outlined"
                 style={{ color: "gray", borderColor: "gray" }}
-                onClick={() => {
-                  let thisTime = new Date();
+                onClick={async () => {
+                  const now = new Date();
+                  const formattedTime = `${now.getFullYear()}-${String(
+                    now.getMonth() + 1
+                  ).padStart(2, "0")}-${String(now.getDate()).padStart(
+                    2,
+                    "0"
+                  )} ${String(now.getHours()).padStart(2, "0")}:${String(
+                    now.getMinutes()
+                  ).padStart(2, "0")}:${String(now.getSeconds()).padStart(
+                    2,
+                    "0"
+                  )}`;
 
-                  let year = thisTime.getFullYear();
-                  let month = String(thisTime.getMonth() + 1).padStart(2, "0");
-                  let day = String(thisTime.getDate()).padStart(2, "0");
-
-                  let hours = String(thisTime.getHours()).padStart(2, "0");
-                  let minutes = String(thisTime.getMinutes()).padStart(2, "0");
-                  let seconds = String(thisTime.getSeconds()).padStart(2, "0");
-
-                  let formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-                  sendMessage(
+                  await sendMessage(
                     selectedFriendToMessage,
                     thisMessageWillBeSent,
                     formattedTime
                   );
+
+                  fetchMessages(selectedFriendToMessage);
 
                   setThisMessageWillBeSent("");
                 }}
