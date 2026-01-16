@@ -408,17 +408,21 @@ export default function Chat({ setToastData }) {
               width: "90%",
               borderRadius: "10px",
               border: "1px solid lightgrey",
+              display: "flex", 
+              flexDirection: "column", 
+              padding: "10px",
             }}
           >
+            <div style={{ flex: 1, overflowY: "auto" }}>{/* messages */}</div>
+
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-around",
-                marginBottom: "10px",
+                gap: "10px",
+                marginTop: "auto", 
               }}
             >
-              <TextField label="Enter your message"></TextField>
+              <TextField label="Enter your message" size="small" fullWidth />
               <Button
                 variant="outlined"
                 style={{ color: "gray", borderColor: "gray" }}
@@ -632,7 +636,6 @@ export default function Chat({ setToastData }) {
               style={{
                 display: "flex",
                 flexDirection: "row",
-                width: "90%",
                 marginBottom: "10px",
                 justifyContent: "space-around",
               }}
