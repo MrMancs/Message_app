@@ -155,7 +155,7 @@ export default function Chat({ setToastData }) {
         sender: currentUser.username,
         receiver: selectedFriend,
         message: message,
-        sentAt: new Date().toISOString(),
+        sentAt: new Date(),
       }),
     });
   };
