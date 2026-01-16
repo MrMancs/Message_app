@@ -371,14 +371,17 @@ export default function Chat({ setToastData }) {
       </div>
 
       {messageWindows && (
-        <div style={{ height: "100%", backgroundColor: "white" }}>
+        <div style={{ height: "100%", backgroundColor: "white", marginLeft: "20px", marginRight: "20px", maxWidth: "350px", minWidth: "200px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <Button
             onClick={() => setMessageWindows(false)}
             variant="outlined"
-            style={{ color: "gray", borderColor: "gray" }}
+            style={{ color: "gray", borderColor: "gray", marginTop: "10px", marginRight: "10px", width: "30px", alignSelf: "flex-end" }}
           >
             X
           </Button>
+          <div style={{marginTop: "20px", backgroundColor: "lightgray", height: "90%", width: "90%", borderRadius: "10px", border: "1px solid lightgrey", }}>
+
+          </div>
         </div>
       )}
 
