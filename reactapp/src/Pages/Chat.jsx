@@ -14,10 +14,9 @@ export default function Chat({ setToastData }) {
   const [friendRequests, setFriendRequests] = useState(false);
   const [friendRequestUsers, setFriendRequestUsers] = useState([]);
   const [friends, setFriends] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
-
-  /* ================= SEARCH ================= */
 
   const handleSearch = (value) => {
     fetch("/api/search", {
@@ -32,8 +31,6 @@ export default function Chat({ setToastData }) {
       setUsers(data.users || []);
     });
   };
-
-  /* ================= FRIENDS ================= */
 
   const fetchFriends = () => {
     fetch("/api/friends", {
@@ -61,8 +58,6 @@ export default function Chat({ setToastData }) {
     });
   };
 
-  /* ================= FRIEND REQUESTS ================= */
-
   const addFriend = (username) => {
     fetch("/api/add", {
       method: "POST",
@@ -83,6 +78,10 @@ export default function Chat({ setToastData }) {
             : "Error while adding friend",
         severity: data.status === 200 ? "success" : "error",
       });
+
+      if (data.status === 200) {
+        setPendingRequests((prev) => [...prev, username]);
+      }
     });
   };
 
@@ -97,6 +96,10 @@ export default function Chat({ setToastData }) {
       }),
     }).then(() => {
       deleteFriendRequest(requesterName);
+
+      setPendingRequests((prev) =>
+        prev.filter((name) => name !== requesterName)
+      );
     });
   };
 
@@ -122,6 +125,10 @@ export default function Chat({ setToastData }) {
         deleteFriendRequest(requesterName);
         fetchFriends();
       }
+
+      setPendingRequests((prev) =>
+        prev.filter((name) => name !== requesterName)
+      );
     });
   };
 
@@ -133,7 +140,9 @@ export default function Chat({ setToastData }) {
     });
   };
 
-  /* ================= INIT ================= */
+  const isFriend = (username) => friends.includes(username);
+
+  const isPending = (username) => pendingRequests.includes(username);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -153,6 +162,21 @@ export default function Chat({ setToastData }) {
     });
 
     fetchFriends();
+
+    const fetchPendingRequests = () => {
+      fetch("/api/sentfriendrequests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          requesterName: currentUser.username,
+        }),
+      }).then(async (res) => {
+        const data = await res.json();
+        setPendingRequests(data.pending || []);
+      });
+    };
+
+    fetchPendingRequests();
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -412,15 +436,23 @@ export default function Chat({ setToastData }) {
                   }}
                 >
                   <span style={{ fontSize: "20px" }}>{user.username}</span>
-                  <Button
-                    variant="text"
-                    style={{ color: "gray" }}
-                    onClick={() => {
-                      addFriend(user.username);
-                    }}
-                  >
-                    Add
-                  </Button>
+                  {isFriend(user.username) ? (
+                    <Button variant="text" style={{ color: "gray" }}>
+                      Message
+                    </Button>
+                  ) : isPending(user.username) ? (
+                    <Button variant="text" disabled style={{ color: "gray" }}>
+                      Pending
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="text"
+                      style={{ color: "gray" }}
+                      onClick={() => addFriend(user.username)}
+                    >
+                      Add
+                    </Button>
+                  )}
                 </div>
               ))}
             </div>
