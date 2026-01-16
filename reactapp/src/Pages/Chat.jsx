@@ -499,7 +499,10 @@ export default function Chat({ setToastData }) {
                     textAlign: "center",
                     padding: "10px",
                     marginBottom: "10px",
-                    border: msg.sender === currentUser.username ? "1px solid lightgreen" : "1px solid lightblue",
+                    border:
+                      msg.sender === currentUser.username
+                        ? "1px solid lightgreen"
+                        : "1px solid lightblue",
                     borderRadius: "50px",
                   }}
                 >
@@ -746,11 +749,12 @@ export default function Chat({ setToastData }) {
           >
             X
           </Button>
+
           <div
             style={{
               marginTop: "20px",
               backgroundColor: "lightgray",
-              height: "100%",
+              height: "90%",
               width: "90%",
               borderRadius: "10px",
               border: "1px solid lightgrey",
@@ -760,8 +764,46 @@ export default function Chat({ setToastData }) {
               marginBottom: "10px",
             }}
           >
-            <div style={{ flex: 1, overflowY: "auto" }}>{/* messages */}</div>
+            {/* Itt kell a map! */}
+            <div
+              style={{
+                flex: 1,
+                overflowY: "auto",
+                marginBottom: "15px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              {getAllMessages.map((msg, index) => (
+                <div
+                  key={index}
+                  style={{
+                    alignSelf:
+                      msg.sender === currentUser.username
+                        ? "flex-end"
+                        : "flex-start",
+                    backgroundColor:
+                      msg.sender === currentUser.username
+                        ? "lightgreen"
+                        : "lightblue",
+                    maxWidth: "150px",
+                    textAlign: "center",
+                    padding: "10px",
+                    marginBottom: "10px",
+                    border:
+                      msg.sender === currentUser.username
+                        ? "1px solid lightgreen"
+                        : "1px solid lightblue",
+                    borderRadius: "50px",
+                  }}
+                >
+                  <span>{msg.message}</span>
+                </div>
+              ))}
+            </div>
 
+            {/* Input + Send gomb */}
             <div
               style={{
                 display: "flex",
@@ -771,10 +813,40 @@ export default function Chat({ setToastData }) {
                 bottom: 0,
               }}
             >
-              <TextField label="Enter your message" size="small" fullWidth />
+              <TextField
+                label="Enter your message"
+                size="small"
+                fullWidth
+                value={thisMessageWillBeSent}
+                onChange={(e) => setThisMessageWillBeSent(e.target.value)}
+              />
               <Button
                 variant="outlined"
                 style={{ color: "gray", borderColor: "gray" }}
+                onClick={async () => {
+                  const now = new Date();
+                  const formattedTime = `${now.getFullYear()}-${String(
+                    now.getMonth() + 1
+                  ).padStart(2, "0")}-${String(now.getDate()).padStart(
+                    2,
+                    "0"
+                  )} ${String(now.getHours()).padStart(2, "0")}:${String(
+                    now.getMinutes()
+                  ).padStart(2, "0")}:${String(now.getSeconds()).padStart(
+                    2,
+                    "0"
+                  )}`;
+
+                  await sendMessage(
+                    selectedFriendToMessage,
+                    thisMessageWillBeSent,
+                    formattedTime
+                  );
+
+                  fetchMessages(selectedFriendToMessage);
+
+                  setThisMessageWillBeSent("");
+                }}
               >
                 Send
               </Button>
