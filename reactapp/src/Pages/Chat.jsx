@@ -642,6 +642,8 @@ export default function Chat({ setToastData }) {
                 display: "flex",
                 gap: "10px",
                 marginTop: "auto",
+                position: "sticky",
+                bottom: 0,
               }}
             >
               <TextField label="Enter your message" size="small" fullWidth />
